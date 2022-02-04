@@ -11,7 +11,7 @@ protocol CalendarSelectorViewOutputProtocol {
     init(view: CalendarSelectorViewInputProtocol)
 }
 
-protocol CalendarSelectorViewInputProtocol {
+protocol CalendarSelectorViewInputProtocol: AnyObject {
 }
 
 class CalendarSelectorViewController: UIViewController, CalendarSelectorViewInputProtocol {

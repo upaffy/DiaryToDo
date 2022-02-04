@@ -5,7 +5,7 @@
 //  Created by Pavlentiy on 03.02.2022.
 //
 
-protocol CalendarSelectorInteractorOutputProtocol {
+protocol CalendarSelectorInteractorOutputProtocol: AnyObject {
 }
 
 protocol CalendarSelectorInteractorInputProtocol {
