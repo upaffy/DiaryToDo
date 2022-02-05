@@ -14,14 +14,23 @@ protocol CalendarSelectorViewOutputProtocol {
 protocol CalendarSelectorViewInputProtocol: AnyObject {
 }
 
-class CalendarSelectorViewController: UIViewController, CalendarSelectorViewInputProtocol {
+class CalendarSelectorViewController: UIView, CalendarSelectorViewInputProtocol {
     
     var presenter: CalendarSelectorViewOutputProtocol!
     
     private let configurator: CalendarSelectorConfiguratorInputProtocol = CalendarSelectorConfigurator()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configurator.configure(withView: self)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        configureView()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        configureView()
+    }
+    
+    private func configureView() {
+        
     }
 }

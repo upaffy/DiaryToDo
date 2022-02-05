@@ -141,12 +141,10 @@
 			isa = PBXGroup;
 			children = (
 				E9867EB827ABB8D2003EA66B /* CalendarSelector */,
-				E9DA029627A9260900E04328 /* AppDelegate.swift */,
 				E9DA029A27A9260900E04328 /* ViewController.swift */,
-				E9DA029C27A9260900E04328 /* Main.storyboard */,
-				E9DA029F27A9260C00E04328 /* Assets.xcassets */,
-				E9DA02A127A9260C00E04328 /* LaunchScreen.storyboard */,
-				E9DA02A427A9260C00E04328 /* Info.plist */,
+				E9FEBB8F27AE7D7D00690C29 /* Storyboards */,
+				E9FEBB8E27AE7D5500690C29 /* SupportingFiles */,
+				E9FEBB8D27AE7D2500690C29 /* Resources */,
 			);
 			path = DiaryToDo;
 			sourceTree = "<group>";
@@ -166,6 +164,32 @@
 				E9DA02B927A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift */,
 			);
 			path = DiaryToDoUITests;
+			sourceTree = "<group>";
+		};
+		E9FEBB8D27AE7D2500690C29 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E9DA029F27A9260C00E04328 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E9FEBB8E27AE7D5500690C29 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				E9DA02A427A9260C00E04328 /* Info.plist */,
+				E9DA029627A9260900E04328 /* AppDelegate.swift */,
+			);
+			path = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		E9FEBB8F27AE7D7D00690C29 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				E9DA029C27A9260900E04328 /* Main.storyboard */,
+				E9DA02A127A9260C00E04328 /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
