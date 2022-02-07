@@ -7,7 +7,16 @@
 
 import UIKit
 
-class ViewController: UIViewController, UICollectionViewDelegate {
+protocol CalendarTaskListViewOutputProtocol {
+    init(view: CalendarTaskListViewInputProtocol)
+}
+
+protocol CalendarTaskListViewInputProtocol: AnyObject {
+
+}
+
+class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInputProtocol {
+    var presenter: CalendarTaskListViewOutputProtocol!
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -143,7 +152,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
 }
 
 // MARK: - UICollectionViewDataSource
-extension ViewController: UICollectionViewDataSource {
+extension CalendarTaskListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         totalSquares.count + weekdays.count
     }
@@ -172,7 +181,7 @@ extension ViewController: UICollectionViewDataSource {
     }
 }
 
-extension ViewController: UICollectionViewDelegateFlowLayout {
+extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
         layout collectionViewLayout: UICollectionViewLayout,
