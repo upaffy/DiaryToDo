@@ -7,25 +7,47 @@
 
 import UIKit
 
-class CalendarCell: UICollectionViewCell {
-    var dayOfMonth: UILabel = {
+protocol CellViewModelRepresentable {
+    var viewModel: CalendarCellViewModelProtocol? { get }
+}
+
+class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
+    var viewModel: CalendarCellViewModelProtocol? {
+        didSet {
+            updateView()
+        }
+    }
+    
+    private lazy var dayOfMonth: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textAlignment = .center
         label.font = UIFont.systemFont(ofSize: 18, weight: .medium)
+        
         return label
     }()
-    
-    static let reuseIdentifier = String(describing: CalendarCell.self)
-    
+        
     override init(frame: CGRect) {
         super.init(frame: frame)
-
         contentView.addSubview(dayOfMonth)
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func updateView() {
+        guard let viewModel = viewModel as? CalendarCellViewModel else { return }
+        
+        dayOfMonth.text = viewModel.dayOfMonth
+        
+        if viewModel.dayType == .current {
+            dayOfMonth.textColor = .black
+        } else if viewModel.dayType == .weekday {
+            dayOfMonth.textColor = .red
+        } else {
+            dayOfMonth.textColor = .gray
+        }
     }
     
     override func layoutSubviews() {
