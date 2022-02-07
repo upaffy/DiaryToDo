@@ -38,26 +38,18 @@ class CalendarTaskListViewController: UIViewController {
     }()
     
     private lazy var leftButton: UIButton = {
-        let button = UIButton()
+        let button = ArrowButton(buttonSize: 50)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(UIImage(systemName: "arrowshape.turn.up.left.circle.fill"), for: .normal)
-        button.setTitle("Prev", for: .normal)
-        button.backgroundColor = .blue
-        
         button.addTarget(self, action: #selector(showPreviousMonth), for: .touchUpInside)
         
         return button
     }()
     
     private lazy var rightButton: UIButton = {
-        let button = UIButton()
+        let button = ArrowButton(buttonSize: 50, isMirrored: true)
         
         button.translatesAutoresizingMaskIntoConstraints = false
-//        button.setImage(UIImage(systemName: "arrowshape.turn.up.right.circle.fill"), for: .normal)
-        button.setTitle("Next", for: .normal)
-        button.backgroundColor = .blue
-        
         button.addTarget(self, action: #selector(showNextMonth), for: .touchUpInside)
 
         return button
