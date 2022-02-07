@@ -32,6 +32,7 @@ class ArrowButton: UIButton {
         if isMirrored {
             layer.setAffineTransform(CGAffineTransform(scaleX: -1, y: 1))
         }
+        
         layer.addSublayer(self.arrow ?? CAShapeLayer())
     }
     
