@@ -9,14 +9,21 @@ import UIKit
 
 protocol CalendarTaskListViewOutputProtocol {
     init(view: CalendarTaskListViewInputProtocol)
+    
+    func viewDidLoad()
+    func leftButtonPressed()
+    func rightButtonPressed()
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
-
+    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String)
 }
 
-class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInputProtocol {
+class CalendarTaskListViewController: UIViewController {
     var presenter: CalendarTaskListViewOutputProtocol!
+    private let configurator: CalendarTaskListConfiguratorInputProtocol = CalendarTaskListConfigurator()
+    
+    private var sectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
     
     private lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -38,7 +45,7 @@ class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInpu
         button.setTitle("Prev", for: .normal)
         button.backgroundColor = .blue
         
-        button.addTarget(self, action: #selector(previousMonth), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showPreviousMonth), for: .touchUpInside)
         
         return button
     }()
@@ -51,27 +58,15 @@ class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInpu
         button.setTitle("Next", for: .normal)
         button.backgroundColor = .blue
         
-        button.addTarget(self, action: #selector(nextMonth), for: .touchUpInside)
+        button.addTarget(self, action: #selector(showNextMonth), for: .touchUpInside)
 
         return button
     }()
-    
-    var selectedDate = Date()
-    var totalSquares = [CalendarDay]()
-    
-    let weekdays = [
-        CalendarDay(day: "Sun", type: .weekday),
-        CalendarDay(day: "Mon", type: .weekday),
-        CalendarDay(day: "Tue", type: .weekday),
-        CalendarDay(day: "Wed", type: .weekday),
-        CalendarDay(day: "Thu", type: .weekday),
-        CalendarDay(day: "Fri", type: .weekday),
-        CalendarDay(day: "Sat", type: .weekday)
-    ]
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        setMonthView()
+        configurator.configure(with: self)
+        presenter.viewDidLoad()
         
         view.addSubview(collectionView)
         view.addSubview(leftButton)
@@ -94,56 +89,19 @@ class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInpu
         
         collectionView.register(
             CalendarCell.self,
-            forCellWithReuseIdentifier: CalendarCell.reuseIdentifier
+            forCellWithReuseIdentifier: CalendarCellViewModel.reuseIdentifier
         )
         
         collectionView.dataSource = self
         collectionView.delegate = self
     }
     
-    func setMonthView() {
-        totalSquares = weekdays
-        
-        let daysInMonth = CalendarHelper().daysInMonth(date: selectedDate)
-        let firstDayOfMonth = CalendarHelper().firstOfMonth(date: selectedDate)
-        let startingSpaces = CalendarHelper().weekDay(date: firstDayOfMonth)
-        
-        let prevMonth = CalendarHelper().minusMonth(date: selectedDate)
-        let daysInPrevMonth = CalendarHelper().daysInMonth(date: prevMonth)
-        
-        let elementsCountInCollectionView = 49
-        
-        var count: Int = 1
-        
-        while count <= elementsCountInCollectionView {
-            let calendarDay: CalendarDay
-            if count <= startingSpaces {
-                let prevMonthDay = daysInPrevMonth - startingSpaces + count
-                calendarDay = CalendarDay(day: "\(prevMonthDay)", type: .previous)
-            } else if count - startingSpaces > daysInMonth {
-                calendarDay = CalendarDay(day: "\(count - daysInMonth - startingSpaces)", type: .next)
-            } else {
-                calendarDay = CalendarDay(day: "\(count - startingSpaces)", type: .current)
-            }
-            
-            totalSquares.append(calendarDay)
-            count += 1
-        }
-        
-        navigationItem.title = CalendarHelper().monthString(date: selectedDate)
-        + " " + CalendarHelper().yearString(date: selectedDate)
-        
-        collectionView.reloadData()
-    }
-    
-    @objc func previousMonth(_ sender: Any) {
-        selectedDate = CalendarHelper().minusMonth(date: selectedDate)
-        setMonthView()
+    @objc func showPreviousMonth(_ sender: Any) {
+        presenter.leftButtonPressed()
     }
 
-    @IBAction func nextMonth(_ sender: Any) {
-        selectedDate = CalendarHelper().plusMonth(date: selectedDate)
-        setMonthView()
+    @objc func showNextMonth(_ sender: Any) {
+        presenter.rightButtonPressed()
     }
     
     override open var shouldAutorotate: Bool {
@@ -154,33 +112,23 @@ class CalendarTaskListViewController: UIViewController, CalendarTaskListViewInpu
 // MARK: - UICollectionViewDataSource
 extension CalendarTaskListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        totalSquares.count + weekdays.count
+        sectionViewModel.cells.count
+//        totalSquares.count + weekdays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        
-        let cell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: CalendarCell.reuseIdentifier,
-            for: indexPath
-            
-            // swiftlint:disable:next force_cast
-        ) as! CalendarCell
-        
-        let calendarDay = totalSquares[indexPath.item]
-        cell.dayOfMonth.text = calendarDay.day
-        
-        if calendarDay.type == .current {
-            cell.dayOfMonth.textColor = .black
-        } else if calendarDay.type == .weekday {
-            cell.dayOfMonth.textColor = .red
-        } else {
-            cell.dayOfMonth.textColor = .gray
-        }
+        let cellViewModel = sectionViewModel.cells[indexPath.item]
+        // swiftlint:disable force_cast
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCellViewModel.reuseIdentifier,
+                                                      for: indexPath) as! CalendarCell
+        // swiftlint:enable force_cast
+        cell.viewModel = cellViewModel
         
         return cell
     }
 }
 
+// MARK: - UICollectionViewDelegateFlowLayout
 extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(
         _ collectionView: UICollectionView,
@@ -188,9 +136,19 @@ extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         
-        let width = Int(collectionView.frame.width / 7)
+        let width = Int(collectionView.frame.width) / 7
         let height = Int(collectionView.frame.height) / 7
         
         return CGSize(width: width, height: height)
+    }
+}
+
+// MARK: - CalendarTaskListViewInputProtocol
+extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
+    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String) {
+        navigationItem.title = navItemTitle
+        sectionViewModel = section
+        
+        collectionView.reloadData()
     }
 }

@@ -29,7 +29,6 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.addSubview(dayOfMonth)
     }
     
     required init?(coder: NSCoder) {
@@ -52,6 +51,7 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.addSubview(dayOfMonth)
         
         NSLayoutConstraint.activate([
           dayOfMonth.centerYAnchor.constraint(equalTo: centerYAnchor),

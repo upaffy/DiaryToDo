@@ -6,7 +6,7 @@
 //
 
 protocol CalendarCellViewModelProtocol {
-    var reuseIdentifier: String { get }
+    static var reuseIdentifier: String { get }
     var dayOfMonth: String { get }
     var dayType: CalendarDay.DayType { get }
     
@@ -18,7 +18,7 @@ protocol CalendarSectionViewModelProtocol {
 }
 
 class CalendarCellViewModel: CalendarCellViewModelProtocol {
-    var reuseIdentifier = String(describing: CalendarCellViewModel.self)
+    static var reuseIdentifier = String(describing: CalendarCellViewModel.self)
     
     var dayOfMonth: String {
         calendarDay.day
