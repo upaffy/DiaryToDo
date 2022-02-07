@@ -132,6 +132,14 @@
 			path = CalendarCell;
 			sourceTree = "<group>";
 		};
+		E9A1D96927B126B500C03D9B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E9CDF9D427B0433600CC8857 /* CalendarDay.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		E9DA028A27A9260900E04328 = {
 			isa = PBXGroup;
 			children = (
@@ -158,7 +166,7 @@
 			isa = PBXGroup;
 			children = (
 				E9A1D96127B1043A00C03D9B /* CalendarTaskList */,
-				E9CDF9D427B0433600CC8857 /* CalendarDay.swift */,
+				E9A1D96927B126B500C03D9B /* Models */,
 				E9FEBB8F27AE7D7D00690C29 /* Storyboards */,
 				E9FEBB8E27AE7D5500690C29 /* SupportingFiles */,
 				E9FEBB8D27AE7D2500690C29 /* Resources */,
