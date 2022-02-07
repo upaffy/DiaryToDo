@@ -13,7 +13,6 @@
 		E9A1D96527B1063200C03D9B /* CalendarTaskListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */; };
 		E9A1D96827B10CC200C03D9B /* CalendarCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96727B10CC200C03D9B /* CalendarCellViewModel.swift */; };
 		E9A1D96B27B13EFA00C03D9B /* MonthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96A27B13EFA00C03D9B /* MonthType.swift */; };
-		E9CDF9D127B042CD00CC8857 /* CalendarHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF9D027B042CD00CC8857 /* CalendarHelper.swift */; };
 		E9CDF9D327B0430B00CC8857 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF9D227B0430B00CC8857 /* CalendarCell.swift */; };
 		E9CDF9D527B0433600CC8857 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF9D427B0433600CC8857 /* CalendarDay.swift */; };
 		E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA029627A9260900E04328 /* AppDelegate.swift */; };
@@ -52,7 +51,6 @@
 		E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListInteractor.swift; sourceTree = "<group>"; };
 		E9A1D96727B10CC200C03D9B /* CalendarCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCellViewModel.swift; sourceTree = "<group>"; };
 		E9A1D96A27B13EFA00C03D9B /* MonthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthType.swift; sourceTree = "<group>"; };
-		E9CDF9D027B042CD00CC8857 /* CalendarHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarHelper.swift; sourceTree = "<group>"; };
 		E9CDF9D227B0430B00CC8857 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E9CDF9D427B0433600CC8857 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		E9DA029327A9260900E04328 /* DiaryToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiaryToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -120,7 +118,6 @@
 				E9A1D96227B1052200C03D9B /* CalendarTaskListPresenter.swift */,
 				E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */,
 				E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */,
-				E9CDF9D027B042CD00CC8857 /* CalendarHelper.swift */,
 			);
 			path = CalendarTaskList;
 			sourceTree = "<group>";
@@ -397,7 +394,6 @@
 			files = (
 				E9A1D96327B1052200C03D9B /* CalendarTaskListPresenter.swift in Sources */,
 				E9DA029B27A9260900E04328 /* CalendarTaskListViewController.swift in Sources */,
-				E9CDF9D127B042CD00CC8857 /* CalendarHelper.swift in Sources */,
 				E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */,
 				E9A1D96027B1042B00C03D9B /* CalendarTaskListConfigurator.swift in Sources */,
 				E9A1D96827B10CC200C03D9B /* CalendarCellViewModel.swift in Sources */,

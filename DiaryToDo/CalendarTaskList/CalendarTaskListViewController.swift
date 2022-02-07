@@ -68,11 +68,22 @@ class CalendarTaskListViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
-        view.addSubview(collectionView)
-        view.addSubview(leftButton)
-        view.addSubview(rightButton)
+        addSubviews(collectionView, leftButton, rightButton)
+        setupConstraints()
         
-        NSLayoutConstraint.activate([
+        setupCollectionView()
+    }
+    
+    @objc private func showPreviousMonth(_ sender: Any) {
+        presenter.leftButtonPressed()
+    }
+
+    @objc private func showNextMonth(_ sender: Any) {
+        presenter.rightButtonPressed()
+    }
+    
+    private func setupConstraints() {
+        let constraints = [
             leftButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             leftButton.centerYAnchor.constraint(equalTo: collectionView.centerYAnchor),
             leftButton.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.08),
@@ -85,8 +96,18 @@ class CalendarTaskListViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3)
-        ])
+        ]
         
+        NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func addSubviews(_ views: UIView...) {
+        views.forEach { subview in
+            view.addSubview(subview)
+        }
+    }
+    
+    private func setupCollectionView() {
         collectionView.register(
             CalendarCell.self,
             forCellWithReuseIdentifier: CalendarCellViewModel.reuseIdentifier
@@ -95,25 +116,12 @@ class CalendarTaskListViewController: UIViewController {
         collectionView.dataSource = self
         collectionView.delegate = self
     }
-    
-    @objc func showPreviousMonth(_ sender: Any) {
-        presenter.leftButtonPressed()
-    }
-
-    @objc func showNextMonth(_ sender: Any) {
-        presenter.rightButtonPressed()
-    }
-    
-    override open var shouldAutorotate: Bool {
-        return false
-    }
 }
 
 // MARK: - UICollectionViewDataSource
 extension CalendarTaskListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         sectionViewModel.cells.count
-//        totalSquares.count + weekdays.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -130,15 +138,11 @@ extension CalendarTaskListViewController: UICollectionViewDataSource {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout collectionViewLayout: UICollectionViewLayout,
-        sizeForItemAt indexPath: IndexPath
-    ) -> CGSize {
-        
+    // swiftlint:disable:next line_length
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = Int(collectionView.frame.width) / 7
         let height = Int(collectionView.frame.height) / 7
-        
+
         return CGSize(width: width, height: height)
     }
 }
