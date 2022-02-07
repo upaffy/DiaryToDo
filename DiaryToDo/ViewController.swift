@@ -25,7 +25,9 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrowshape.turn.up.left.circle.fill"), for: .normal)
+//        button.setImage(UIImage(systemName: "arrowshape.turn.up.left.circle.fill"), for: .normal)
+        button.setTitle("Prev", for: .normal)
+        button.backgroundColor = .blue
         
         button.addTarget(self, action: #selector(previousMonth), for: .touchUpInside)
         
@@ -36,7 +38,9 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         let button = UIButton()
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "arrowshape.turn.up.right.circle.fill"), for: .normal)
+//        button.setImage(UIImage(systemName: "arrowshape.turn.up.right.circle.fill"), for: .normal)
+        button.setTitle("Next", for: .normal)
+        button.backgroundColor = .blue
         
         button.addTarget(self, action: #selector(nextMonth), for: .touchUpInside)
 
@@ -56,8 +60,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         CalendarDay(day: "Sat", type: .weekday)
     ]
     
-    override func viewDidLoad()
-    {
+    override func viewDidLoad() {
         super.viewDidLoad()
         setMonthView()
         
@@ -77,7 +80,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
             collectionView.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3)
         ])
         
         collectionView.register(
@@ -89,8 +92,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         collectionView.delegate = self
     }
     
-    func setMonthView()
-    {
+    func setMonthView() {
         totalSquares = weekdays
         
         let daysInMonth = CalendarHelper().daysInMonth(date: selectedDate)
@@ -104,8 +106,7 @@ class ViewController: UIViewController, UICollectionViewDelegate {
         
         var count: Int = 1
         
-        while(count <= elementsCountInCollectionView)
-        {
+        while count <= elementsCountInCollectionView {
             let calendarDay: CalendarDay
             if count <= startingSpaces {
                 let prevMonthDay = daysInPrevMonth - startingSpaces + count
@@ -120,24 +121,23 @@ class ViewController: UIViewController, UICollectionViewDelegate {
             count += 1
         }
         
-        navigationItem.title = CalendarHelper().monthString(date: selectedDate) + " " + CalendarHelper().yearString(date: selectedDate)
+        navigationItem.title = CalendarHelper().monthString(date: selectedDate)
+        + " " + CalendarHelper().yearString(date: selectedDate)
+        
         collectionView.reloadData()
     }
     
-    @objc func previousMonth(_ sender: Any)
-    {
+    @objc func previousMonth(_ sender: Any) {
         selectedDate = CalendarHelper().minusMonth(date: selectedDate)
         setMonthView()
     }
 
-    @IBAction func nextMonth(_ sender: Any)
-    {
+    @IBAction func nextMonth(_ sender: Any) {
         selectedDate = CalendarHelper().plusMonth(date: selectedDate)
         setMonthView()
     }
     
-    override open var shouldAutorotate: Bool
-    {
+    override open var shouldAutorotate: Bool {
         return false
     }
 }
@@ -149,7 +149,13 @@ extension ViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCell.reuseIdentifier, for: indexPath) as! CalendarCell
+        
+        let cell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: CalendarCell.reuseIdentifier,
+            for: indexPath
+            
+            // swiftlint:disable:next force_cast
+        ) as! CalendarCell
         
         let calendarDay = totalSquares[indexPath.item]
         cell.dayOfMonth.text = calendarDay.day
@@ -161,7 +167,6 @@ extension ViewController: UICollectionViewDataSource {
         } else {
             cell.dayOfMonth.textColor = .gray
         }
-        
         
         return cell
     }
@@ -180,4 +185,3 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
         return CGSize(width: width, height: height)
     }
 }
-
