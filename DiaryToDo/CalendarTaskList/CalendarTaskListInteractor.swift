@@ -94,7 +94,8 @@ extension CalendarTaskListInteractor {
     }
     
     private func fetchFirstMonthDay(from date: Date) -> Date {
-        let components = calendar.dateComponents([.year, .month], from: date)
+        let components = calendar.dateComponents([.year, .month, .hour], from: date)
+
         return calendar.date(from: components) ?? Date()
     }
     
