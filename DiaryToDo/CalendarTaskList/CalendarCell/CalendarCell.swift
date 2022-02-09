@@ -59,7 +59,7 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         if viewModel.isSelected {
             applySelectedStyle()
         } else {
-            applyDefaultStyle()
+            applyDefaultStyle(isDayCurrent: viewModel.isCurrent)
         }
     }
     
@@ -71,24 +71,28 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         let size = min(frame.width, frame.height) - 10
         
         NSLayoutConstraint.activate([
-          dayOfMonth.centerYAnchor.constraint(equalTo: centerYAnchor),
-          dayOfMonth.centerXAnchor.constraint(equalTo: centerXAnchor),
-          
-          selectionBackgroundView.centerYAnchor.constraint(equalTo: dayOfMonth.centerYAnchor),
-          selectionBackgroundView.centerXAnchor.constraint(equalTo: dayOfMonth.centerXAnchor),
-          selectionBackgroundView.widthAnchor.constraint(equalToConstant: size),
-          selectionBackgroundView.heightAnchor.constraint(equalTo: selectionBackgroundView.widthAnchor)
+            dayOfMonth.centerYAnchor.constraint(equalTo: centerYAnchor),
+            dayOfMonth.centerXAnchor.constraint(equalTo: centerXAnchor),
+            
+            selectionBackgroundView.centerYAnchor.constraint(equalTo: dayOfMonth.centerYAnchor),
+            selectionBackgroundView.centerXAnchor.constraint(equalTo: dayOfMonth.centerXAnchor),
+            selectionBackgroundView.widthAnchor.constraint(equalToConstant: size),
+            selectionBackgroundView.heightAnchor.constraint(equalTo: selectionBackgroundView.widthAnchor)
         ])
         
         selectionBackgroundView.layer.cornerRadius = size / 2
     }
     
     private func applySelectedStyle() {
-      dayOfMonth.textColor = .white
-      selectionBackgroundView.isHidden = false
+        dayOfMonth.textColor = .white
+        selectionBackgroundView.isHidden = false
     }
     
-    private func applyDefaultStyle() {
-      selectionBackgroundView.isHidden = true
+    private func applyDefaultStyle(isDayCurrent: Bool) {
+        selectionBackgroundView.isHidden = true
+        
+        if isDayCurrent {
+            dayOfMonth.textColor = .red
+        }
     }
 }

@@ -24,18 +24,23 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     }
     
     func viewDidLoad() {
-        interactor.fetchDays(for: .currentMonth)
+        interactor.fetchDays(for: .currentMonth, and: nil)
     }
     
     func leftButtonPressed() {
-        interactor.fetchDays(for: .previousMonth)
+        interactor.fetchDays(for: .previousMonth, and: nil)
     }
     
     func rightButtonPressed() {
-        interactor.fetchDays(for: .nextMonth)
+        interactor.fetchDays(for: .nextMonth, and: nil)
+    }
+    
+    func collectionViewCellDidSelect(at indexPath: IndexPath) {
+        interactor.fetchDays(for: .currentMonth, and: indexPath.item)
     }
 }
 
+// MARK: - CalendarTaskListInteractorOutputProtocol
 extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
     func daysDidReceive(with dataStore: CalendarTaskListDataStore) {
         self.dataStore = dataStore

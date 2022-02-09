@@ -13,6 +13,7 @@ protocol CalendarTaskListViewOutputProtocol {
     func viewDidLoad()
     func leftButtonPressed()
     func rightButtonPressed()
+    func collectionViewCellDidSelect(at indexPath: IndexPath)
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
@@ -131,7 +132,7 @@ extension CalendarTaskListViewController: UICollectionViewDataSource {
 // MARK: - UICollectionViewDelegate
 extension CalendarTaskListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.item)
+        presenter.collectionViewCellDidSelect(at: indexPath)
     }
 }
 

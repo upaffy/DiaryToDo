@@ -10,6 +10,7 @@ protocol CalendarCellViewModelProtocol {
     var dayOfMonth: String { get }
     var dayType: CalendarDay.DayType { get }
     var isSelected: Bool { get }
+    var isCurrent: Bool { get }
     
     init(calendarDay: CalendarDay)
 }
@@ -31,6 +32,10 @@ class CalendarCellViewModel: CalendarCellViewModelProtocol {
     
     var isSelected: Bool {
         calendarDay.isSelected
+    }
+    
+    var isCurrent: Bool {
+        calendarDay.isCurrent
     }
     
     private let calendarDay: CalendarDay
