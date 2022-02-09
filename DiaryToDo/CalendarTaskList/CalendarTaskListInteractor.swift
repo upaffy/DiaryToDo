@@ -51,6 +51,7 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
         
         let elementsCountInCollectionView = 49
         
+        var day = firstDayOfMonth
         for count in 1...elementsCountInCollectionView {
             let calendarDay: CalendarDay
             
@@ -60,7 +61,13 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
             } else if count - startingSpaces > daysInMonth {
                 calendarDay = CalendarDay(day: "\(count - daysInMonth - startingSpaces)", type: .next)
             } else {
-                calendarDay = CalendarDay(day: "\(count - startingSpaces)", type: .current)
+                calendarDay = CalendarDay(
+                    day: "\(count - startingSpaces)",
+                    type: .current,
+                    isSelected: calendar.isDateInToday(day)
+                )
+                
+                day = calendar.date(byAdding: .day, value: 1, to: day) ?? Date()
             }
             
             days.append(calendarDay)

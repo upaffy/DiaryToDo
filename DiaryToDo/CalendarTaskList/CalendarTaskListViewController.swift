@@ -128,6 +128,13 @@ extension CalendarTaskListViewController: UICollectionViewDataSource {
     }
 }
 
+// MARK: - UICollectionViewDelegate
+extension CalendarTaskListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.item)
+    }
+}
+
 // MARK: - UICollectionViewDelegateFlowLayout
 extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
     // swiftlint:disable:next line_length

@@ -18,6 +18,14 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         }
     }
     
+    private lazy var selectionBackgroundView: UIView = {
+      let view = UIView()
+      view.translatesAutoresizingMaskIntoConstraints = false
+      view.clipsToBounds = true
+      view.backgroundColor = .systemRed
+      return view
+    }()
+    
     private lazy var dayOfMonth: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -47,15 +55,40 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         } else {
             dayOfMonth.textColor = .gray
         }
+        
+        if viewModel.isSelected {
+            applySelectedStyle()
+        } else {
+            applyDefaultStyle()
+        }
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(dayOfMonth)
+        
+        let size = min(frame.width, frame.height) - 10
         
         NSLayoutConstraint.activate([
           dayOfMonth.centerYAnchor.constraint(equalTo: centerYAnchor),
-          dayOfMonth.centerXAnchor.constraint(equalTo: centerXAnchor)
+          dayOfMonth.centerXAnchor.constraint(equalTo: centerXAnchor),
+          
+          selectionBackgroundView.centerYAnchor.constraint(equalTo: dayOfMonth.centerYAnchor),
+          selectionBackgroundView.centerXAnchor.constraint(equalTo: dayOfMonth.centerXAnchor),
+          selectionBackgroundView.widthAnchor.constraint(equalToConstant: size),
+          selectionBackgroundView.heightAnchor.constraint(equalTo: selectionBackgroundView.widthAnchor)
         ])
+        
+        selectionBackgroundView.layer.cornerRadius = size / 2
+    }
+    
+    private func applySelectedStyle() {
+      dayOfMonth.textColor = .white
+      selectionBackgroundView.isHidden = false
+    }
+    
+    private func applyDefaultStyle() {
+      selectionBackgroundView.isHidden = true
     }
 }
