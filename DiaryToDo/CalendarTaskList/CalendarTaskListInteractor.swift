@@ -20,6 +20,7 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     unowned let presenter: CalendarTaskListInteractorOutputProtocol
     
     let calendar = Calendar.current
+    private var baseDate = Date()
     private var selectedDate = Date()
     private var days = [CalendarDay]()
     
@@ -36,17 +37,17 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     private let elementsCountInCollectionView = 49
     
     private var daysInMonth: Int {
-        countDaysInMonth(date: selectedDate)
+        countDaysInMonth(date: baseDate)
     }
     private var firstDayOfMonth: Date {
-        fetchFirstMonthDay(from: selectedDate)
+        fetchFirstMonthDay(from: baseDate)
     }
     private var startingSpaces: Int {
         fetchWeekDay(from: firstDayOfMonth)
     }
     
     private var prevMonth: Date {
-        subtractMonth(from: selectedDate)
+        subtractMonth(from: baseDate)
     }
     private var daysInPrevMonth: Int {
         countDaysInMonth(date: prevMonth)
@@ -57,12 +58,12 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     }
     
     func fetchDays(for monthType: MonthType?, and dayIndex: Int?) {
-        defineSelectedDate(by: monthType, and: dayIndex)
+        defineBaseDate(by: monthType, and: dayIndex)
         fetchDays()
     }
 }
 
-// MARK: - Private functions
+// MARK: - Private methods
 extension CalendarTaskListInteractor {
     private func fetchDays() {
         days = weekdays
@@ -92,47 +93,52 @@ extension CalendarTaskListInteractor {
             days.append(calendarDay)
         }
         
-        let month = fetchMonthString(from: selectedDate)
-        let year = fetchYearString(from: selectedDate)
+        let month = fetchMonthString(from: baseDate)
+        let year = fetchYearString(from: baseDate)
         
         let dataStore = CalendarTaskListDataStore(days: days, displayedMonth: month, displayedYear: year)
         
         presenter.daysDidReceive(with: dataStore)
     }
     
-    private func defineSelectedDate(by monthType: MonthType?, and index: Int?) {
+    private func defineBaseDate(by monthType: MonthType?, and index: Int?) {
         guard let index = index else {
-            defineSelectedDate(by: monthType ?? .currentMonth)
+            defineBaseDate(by: monthType ?? .currentMonth)
             return
         }
         
+        defineSelectedDate(by: index)
+        baseDate = selectedDate
+    }
+    
+    private func defineBaseDate(by monthType: MonthType) {
+        switch monthType {
+        case .previousMonth:
+            baseDate = fetchFirstMonthDay(from: subtractMonth(from: baseDate))
+        case .currentMonth:
+            baseDate = Date()
+        case .nextMonth:
+            baseDate = fetchFirstMonthDay(from: addMonth(to: baseDate))
+        }
+    }
+    
+    private func defineSelectedDate(by index: Int) {
         let selectedDay = Int(days[index].day) ?? 1
         
-        if index <= startingSpaces + weekdays.count {
+        if index < startingSpaces + weekdays.count {
             // use old variable value to determine month user is currently on
-            selectedDate = subtractMonth(from: selectedDate)
-        }
-        
-        if index > daysInMonth + weekdays.count {
+            selectedDate = subtractMonth(from: baseDate)
+        } else if index < daysInMonth + startingSpaces + weekdays.count {
+            selectedDate = baseDate
+        } else {
             // use old variable value to determine month user is currently on
-            selectedDate = addMonth(to: selectedDate)
+            selectedDate = addMonth(to: baseDate)
         }
         
         var components = calendar.dateComponents([.year, .month], from: selectedDate)
         components.setValue(selectedDay, for: .day)
         
         selectedDate = calendar.date(from: components) ?? Date()
-    }
-    
-    private func defineSelectedDate(by monthType: MonthType) {
-        switch monthType {
-        case .previousMonth:
-            selectedDate = fetchFirstMonthDay(from: subtractMonth(from: selectedDate))
-        case .currentMonth:
-            selectedDate = Date()
-        case .nextMonth:
-            selectedDate = fetchFirstMonthDay(from: addMonth(to: selectedDate))
-        }
     }
     
     private func countDaysInMonth(date: Date) -> Int {
