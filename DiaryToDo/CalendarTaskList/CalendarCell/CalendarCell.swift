@@ -68,7 +68,8 @@ class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
         contentView.addSubview(selectionBackgroundView)
         contentView.addSubview(dayOfMonth)
         
-        let size = min(frame.width, frame.height) - 10
+        let minSide = min(frame.width, frame.height)
+        let size = minSide - 0.15 * minSide
         
         NSLayoutConstraint.activate([
             dayOfMonth.centerYAnchor.constraint(equalTo: centerYAnchor),
