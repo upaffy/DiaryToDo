@@ -5,4 +5,7 @@
 //  Created by Pavlentiy on 10.02.2022.
 //
 
-import Foundation
+struct TaskListSection {
+    let sectionName: String
+    let tasks: [TLTask]
+}
