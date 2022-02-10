@@ -58,7 +58,12 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     }
     
     func fetchDays(for monthType: MonthType?, and dayIndex: Int?) {
-        defineBaseDate(by: monthType, and: dayIndex)
+        if let dayIndex = dayIndex {
+            defineBaseDate(by: dayIndex)
+        } else {
+            defineBaseDate(by: monthType ?? .currentMonth)
+        }
+        
         fetchDays()
     }
 }
@@ -101,12 +106,7 @@ extension CalendarTaskListInteractor {
         presenter.daysDidReceive(with: dataStore)
     }
     
-    private func defineBaseDate(by monthType: MonthType?, and index: Int?) {
-        guard let index = index else {
-            defineBaseDate(by: monthType ?? .currentMonth)
-            return
-        }
-        
+    private func defineBaseDate(by index: Int) {
         defineSelectedDate(by: index)
         baseDate = selectedDate
     }
