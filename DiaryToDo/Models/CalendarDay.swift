@@ -6,8 +6,8 @@
 //
 
 struct CalendarDay {
-    var day: String
-    var type: DayType
+    let day: String
+    let type: DayType
     var isSelected = false
     var isCurrent = false
     
