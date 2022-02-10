@@ -7,11 +7,11 @@
 
 import UIKit
 
-protocol CellViewModelRepresentable {
+protocol CalendarCellViewModelRepresentable {
     var viewModel: CalendarCellViewModelProtocol? { get }
 }
 
-class CalendarCell: UICollectionViewCell, CellViewModelRepresentable {
+class CalendarCell: UICollectionViewCell, CalendarCellViewModelRepresentable {
     var viewModel: CalendarCellViewModelProtocol? {
         didSet {
             updateView()
