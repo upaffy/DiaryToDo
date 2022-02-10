@@ -47,5 +47,6 @@ class TaskListCellViewModel: TaskListCellViewModelProtocol {
 }
 
 class TaskListSectionViewModel: TaskListSectionViewModelProtocol {
+    var sectionName = ""
     var tasks: [TaskListCellViewModelProtocol] = []
 }

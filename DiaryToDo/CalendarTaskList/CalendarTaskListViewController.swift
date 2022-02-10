@@ -18,16 +18,25 @@ protocol CalendarTaskListViewOutputProtocol {
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
     func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String)
+    func reloadTaskList(for sections: [TaskListSectionViewModel])
 }
 
 class CalendarTaskListViewController: UIViewController {
     var presenter: CalendarTaskListViewOutputProtocol!
     private let configurator: CalendarTaskListConfiguratorInputProtocol = CalendarTaskListConfigurator()
     
-    private var sectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
+    private var calendarSectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
+    private var taskListSectionViewModels: [TaskListSectionViewModelProtocol] = []
     
     private lazy var collectionView: UICollectionView = {
         return setCollectionView()
+    }()
+    
+    private lazy var tableView: UITableView = {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return tableView
     }()
     
     private lazy var leftButton: UIButton = {
@@ -53,7 +62,7 @@ class CalendarTaskListViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
-        addSubviews(collectionView, leftButton, rightButton)
+        addSubviews(collectionView, leftButton, rightButton, tableView)
         setupConstraints()
     }
     
@@ -78,7 +87,12 @@ class CalendarTaskListViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3)
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            
+            tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -114,11 +128,11 @@ class CalendarTaskListViewController: UIViewController {
 // MARK: - UICollectionViewDataSource
 extension CalendarTaskListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        sectionViewModel.cells.count
+        calendarSectionViewModel.cells.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellViewModel = sectionViewModel.cells[indexPath.item]
+        let cellViewModel = calendarSectionViewModel.cells[indexPath.item]
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCellViewModel.reuseIdentifier,
                                                       for: indexPath) as! CalendarCell
@@ -149,10 +163,16 @@ extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
 
 // MARK: - CalendarTaskListViewInputProtocol
 extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
-    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String) {
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String) {
         navigationItem.title = navItemTitle
-        sectionViewModel = section
+        calendarSectionViewModel = calendarSection
         
         collectionView.reloadData()
+    }
+    
+    func reloadTaskList(for sections: [TaskListSectionViewModel]) {
+        taskListSectionViewModels = sections
+        
+        tableView.reloadData()
     }
 }

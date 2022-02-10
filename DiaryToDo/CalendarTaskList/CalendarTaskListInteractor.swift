@@ -5,15 +5,17 @@
 //  Created by Pavlentiy on 07.02.2022.
 //
 
-import Foundation
+import RealmSwift
 
 protocol CalendarTaskListInteractorOutputProtocol: AnyObject {
-    func daysDidReceive(with dataStore: CalendarTaskListDataStore)
+    func daysDidReceive(with dataStore: CalendarDataStore)
+    func tasksDidReceive(with dataStore: TaskListDataStore)
 }
 
 protocol CalendarTaskListInteractorInputProtocol {
     init(presenter: CalendarTaskListInteractorOutputProtocol)
     func fetchDays(for monthType: MonthType?, and dayIndex: Int?)
+    func fetchTasksForSelectedDay()
 }
 
 class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
@@ -66,6 +68,14 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
         
         fetchDays()
     }
+    
+    func fetchTasksForSelectedDay() {
+        StorageManager.shared.fetchTasks { tasks in
+            
+        }
+        
+        presenter.tasksDidReceive(with: TaskListDataStore(sections: <#T##[TaskListSection]#>))
+    }
 }
 
 // MARK: - Private methods
@@ -101,7 +111,7 @@ extension CalendarTaskListInteractor {
         let month = fetchMonthString(from: baseDate)
         let year = fetchYearString(from: baseDate)
         
-        let dataStore = CalendarTaskListDataStore(days: days, displayedMonth: month, displayedYear: year)
+        let dataStore = CalendarDataStore(days: days, displayedMonth: month, displayedYear: year)
         
         presenter.daysDidReceive(with: dataStore)
     }
