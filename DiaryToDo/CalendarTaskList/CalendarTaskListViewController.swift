@@ -27,15 +27,7 @@ class CalendarTaskListViewController: UIViewController {
     private var sectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isScrollEnabled = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return collectionView
+        return setCollectionView()
     }()
     
     private lazy var leftButton: UIButton = {
@@ -63,8 +55,6 @@ class CalendarTaskListViewController: UIViewController {
         
         addSubviews(collectionView, leftButton, rightButton)
         setupConstraints()
-        
-        setupCollectionView()
     }
     
     @objc private func showPreviousMonth(_ sender: Any) {
@@ -100,7 +90,15 @@ class CalendarTaskListViewController: UIViewController {
         }
     }
     
-    private func setupCollectionView() {
+    private func setCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         collectionView.register(
             CalendarCell.self,
             forCellWithReuseIdentifier: CalendarCellViewModel.reuseIdentifier
@@ -108,6 +106,8 @@ class CalendarTaskListViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        return collectionView
     }
 }
 
