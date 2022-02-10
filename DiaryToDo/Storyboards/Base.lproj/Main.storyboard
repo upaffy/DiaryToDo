@@ -12,7 +12,7 @@
         <!--Month n Year-->
         <scene sceneID="8C1-Cc-wNT">
             <objects>
-                <viewController id="3QG-Lp-9LV" customClass="ViewController" customModule="DiaryToDo" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3QG-Lp-9LV" customClass="CalendarTaskListViewController" customModule="DiaryToDo" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jib-BC-Vkx">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

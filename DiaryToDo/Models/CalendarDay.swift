@@ -8,6 +8,8 @@
 struct CalendarDay {
     var day: String
     var type: DayType
+    var isSelected = false
+    var isCurrent = false
     
     enum DayType {
         case previous
