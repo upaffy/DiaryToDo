@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9E6E89E3AF3B7A570D971BB6 /* Pods_DiaryToDo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C95856C17F9EC7A6A66EE29 /* Pods_DiaryToDo.framework */; };
+		E92505FB27B4F8FF000C0209 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92505FA27B4F8FF000C0209 /* TaskListCell.swift */; };
+		E92505FD27B4F90E000C0209 /* TaskListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92505FC27B4F90E000C0209 /* TaskListCellViewModel.swift */; };
+		E925060127B4FD1E000C0209 /* TLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925060027B4FD1E000C0209 /* TLTask.swift */; };
 		E9A1D96027B1042B00C03D9B /* CalendarTaskListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */; };
 		E9A1D96327B1052200C03D9B /* CalendarTaskListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96227B1052200C03D9B /* CalendarTaskListPresenter.swift */; };
 		E9A1D96527B1063200C03D9B /* CalendarTaskListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */; };
@@ -47,6 +50,9 @@
 		1C95856C17F9EC7A6A66EE29 /* Pods_DiaryToDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiaryToDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F6BB87C9715E2CD2A1C985D /* Pods-DiaryToDo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryToDo.debug.xcconfig"; path = "Target Support Files/Pods-DiaryToDo/Pods-DiaryToDo.debug.xcconfig"; sourceTree = "<group>"; };
 		32275314052848FD370DE93F /* Pods-DiaryToDo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DiaryToDo.release.xcconfig"; path = "Target Support Files/Pods-DiaryToDo/Pods-DiaryToDo.release.xcconfig"; sourceTree = "<group>"; };
+		E92505FA27B4F8FF000C0209 /* TaskListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListCell.swift; sourceTree = "<group>"; };
+		E92505FC27B4F90E000C0209 /* TaskListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListCellViewModel.swift; sourceTree = "<group>"; };
+		E925060027B4FD1E000C0209 /* TLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTask.swift; sourceTree = "<group>"; };
 		E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListConfigurator.swift; sourceTree = "<group>"; };
 		E9A1D96227B1052200C03D9B /* CalendarTaskListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListPresenter.swift; sourceTree = "<group>"; };
 		E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListInteractor.swift; sourceTree = "<group>"; };
@@ -112,6 +118,15 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		E92505F927B4F8D8000C0209 /* TaskListCell */ = {
+			isa = PBXGroup;
+			children = (
+				E92505FA27B4F8FF000C0209 /* TaskListCell.swift */,
+				E92505FC27B4F90E000C0209 /* TaskListCellViewModel.swift */,
+			);
+			path = TaskListCell;
+			sourceTree = "<group>";
+		};
 		E9A1D96127B1043A00C03D9B /* CalendarTaskList */ = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +135,7 @@
 				E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */,
 				E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */,
 				E9A1D96627B10C9E00C03D9B /* CalendarCell */,
+				E92505F927B4F8D8000C0209 /* TaskListCell */,
 				E9A1D96E27B1793700C03D9B /* ArrowButton.swift */,
 			);
 			path = CalendarTaskList;
@@ -139,6 +155,7 @@
 			children = (
 				E9CDF9D427B0433600CC8857 /* CalendarDay.swift */,
 				E9A1D96A27B13EFA00C03D9B /* MonthType.swift */,
+				E925060027B4FD1E000C0209 /* TLTask.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -397,8 +414,11 @@
 			files = (
 				E9A1D96327B1052200C03D9B /* CalendarTaskListPresenter.swift in Sources */,
 				E9DA029B27A9260900E04328 /* CalendarTaskListViewController.swift in Sources */,
+				E925060127B4FD1E000C0209 /* TLTask.swift in Sources */,
 				E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */,
+				E92505FB27B4F8FF000C0209 /* TaskListCell.swift in Sources */,
 				E9A1D96027B1042B00C03D9B /* CalendarTaskListConfigurator.swift in Sources */,
+				E92505FD27B4F90E000C0209 /* TaskListCellViewModel.swift in Sources */,
 				E9A1D96827B10CC200C03D9B /* CalendarCellViewModel.swift in Sources */,
 				E9CDF9D527B0433600CC8857 /* CalendarDay.swift in Sources */,
 				E9A1D96527B1063200C03D9B /* CalendarTaskListInteractor.swift in Sources */,
