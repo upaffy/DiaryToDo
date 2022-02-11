@@ -22,6 +22,8 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     unowned let presenter: CalendarTaskListInteractorOutputProtocol
     
     let calendar = Calendar.current
+    let secondsInHour = TimeInterval(3600)
+    
     private var baseDate = Date()
     private var selectedDate = Date()
     private var days = [CalendarDay]()
@@ -70,11 +72,12 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     }
     
     func fetchTasksForSelectedDay() {
-        StorageManager.shared.fetchTasks { tasks in
-            
+        var sections: [TaskListSection] = []
+        StorageManager.shared.fetchTasks { [unowned self] tasks in
+            sections = self.prepareSections(from: tasks)
         }
         
-        presenter.tasksDidReceive(with: TaskListDataStore(sections: <#T##[TaskListSection]#>))
+        presenter.tasksDidReceive(with: TaskListDataStore(sections: sections))
     }
 }
 
@@ -187,5 +190,68 @@ extension CalendarTaskListInteractor {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         return dateFormatter.string(from: date)
+    }
+    
+    // swiftlint:disable:next line_length
+    private func defineTasks(between lhs: TimeInterval, and rhs: TimeInterval, from tasks: Results<TaskRealm>) -> Results<TaskRealm> {
+        let predicate = NSPredicate(format: "dateStart BETWEEN {%@, %@}", lhs, rhs)
+        
+        return tasks.filter(predicate)
+    }
+    
+    private func prepareSections(from realmTasks: Results<TaskRealm>) -> [TaskListSection] {
+        var sections: [TaskListSection] = []
+        
+        let dayStart = calendar.dateInterval(of: .day, for: selectedDate)?.start ?? Date()
+        let dayEnd = calendar.dateInterval(of: .day, for: selectedDate)?.end ?? Date()
+        
+        let startDayTimestamp = dayStart.timeIntervalSince1970
+        let endDayTimestamp = dayEnd.timeIntervalSince1970
+        
+        let tasksInSelectedDay = defineTasks(between: startDayTimestamp, and: endDayTimestamp, from: realmTasks)
+        
+        var timeCounter = startDayTimestamp
+        while timeCounter < endDayTimestamp {
+            // moves through the day in 1-hour increments
+            sections.append(prepareHourSection(startHour: timeCounter, with: tasksInSelectedDay))
+            
+            timeCounter += secondsInHour
+        }
+        
+        return sections
+    }
+    
+    private func prepareHourSection(startHour: TimeInterval, with tasks: Results<TaskRealm>) -> TaskListSection {
+        var tlTasks: [TLTask] = []
+        
+        let endHour = startHour + secondsInHour
+        
+        let currentHourTasks = defineTasks(between: startHour, and: endHour, from: tasks)
+        currentHourTasks.forEach { realmTask in
+            tlTasks.append(convertDataToTLTask(from: realmTask))
+        }
+        
+        let sectionName = fetchHourStringFromTimestamp(startHour) + " - " + fetchHourStringFromTimestamp(endHour)
+        
+        return TaskListSection(sectionName: sectionName, tasks: tlTasks)
+    }
+    
+    private func convertDataToTLTask(from task: TaskRealm) -> TLTask {
+        TLTask(
+            id: task.id,
+            dateStart: task.dateStart,
+            dateFinish: task.dateFinish,
+            name: task.name,
+            description: task.taskDescription
+        )
+    }
+    
+    private func fetchHourStringFromTimestamp(_ timestamp: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        
+        return "\(dateFormatter.string(from: date)):00"
     }
 }
