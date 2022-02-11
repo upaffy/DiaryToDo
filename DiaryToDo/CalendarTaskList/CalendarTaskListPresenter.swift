@@ -14,15 +14,12 @@ struct CalendarDataStore {
 }
 
 struct TaskListDataStore {
-    let sections: [TaskListSection]
+    let sections: [TaskListSectionViewModel]
 }
 
 class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     unowned let view: CalendarTaskListViewInputProtocol
     var interactor: CalendarTaskListInteractorInputProtocol!
-    
-    private var calendarDataStore: CalendarDataStore?
-    private var taskListDataStore: TaskListDataStore?
     
     required init(view: CalendarTaskListViewInputProtocol) {
         self.view = view
@@ -50,8 +47,6 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
 // MARK: - CalendarTaskListInteractorOutputProtocol
 extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
     func daysDidReceive(with dataStore: CalendarDataStore) {
-        self.calendarDataStore = dataStore
-        
         let navItemTitle = dataStore.displayedMonth + " " + dataStore.displayedYear
         let calendarSectionVM = CalendarSectionViewModel()
         
@@ -61,18 +56,6 @@ extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
     }
     
     func tasksDidReceive(with dataStore: TaskListDataStore) {
-        self.taskListDataStore = dataStore
-        
-        var taskListSections = [TaskListSectionViewModel]()
-        dataStore.sections.forEach { section in
-            let taskListSectionVM = TaskListSectionViewModel()
-            
-            taskListSectionVM.sectionName = section.sectionName
-            section.tasks.forEach { taskListSectionVM.tasks.append(TaskListCellViewModel(task: $0)) }
-            
-            taskListSections.append(taskListSectionVM)
-        }
-        
-        view.reloadTaskList(for: taskListSections)
+        view.reloadTaskList(for: dataStore.sections)
     }
 }

@@ -72,7 +72,7 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     }
     
     func fetchTasksForSelectedDay() {
-        var sections: [TaskListSection] = []
+        var sections: [TaskListSectionViewModel] = []
         StorageManager.shared.fetchTasks { [unowned self] tasks in
             sections = self.prepareSections(from: tasks)
         }
@@ -199,8 +199,8 @@ extension CalendarTaskListInteractor {
         return tasks.filter(predicate)
     }
     
-    private func prepareSections(from realmTasks: Results<TaskRealm>) -> [TaskListSection] {
-        var sections: [TaskListSection] = []
+    private func prepareSections(from realmTasks: Results<TaskRealm>) -> [TaskListSectionViewModel] {
+        var sections: [TaskListSectionViewModel] = []
         
         let dayStart = calendar.dateInterval(of: .day, for: selectedDate)?.start ?? Date()
         let dayEnd = calendar.dateInterval(of: .day, for: selectedDate)?.end ?? Date()
@@ -221,19 +221,22 @@ extension CalendarTaskListInteractor {
         return sections
     }
     
-    private func prepareHourSection(startHour: TimeInterval, with tasks: Results<TaskRealm>) -> TaskListSection {
-        var tlTasks: [TLTask] = []
+    private func prepareHourSection(startHour: TimeInterval, with tasks: Results<TaskRealm>) -> TaskListSectionViewModel {
+        let taskListSectionViewModel = TaskListSectionViewModel()
         
         let endHour = startHour + secondsInHour
         
         let currentHourTasks = defineTasks(between: startHour, and: endHour, from: tasks)
         currentHourTasks.forEach { realmTask in
-            tlTasks.append(convertDataToTLTask(from: realmTask))
+            let tlTask = convertDataToTLTask(from: realmTask)
+            taskListSectionViewModel.tasks.append(TaskListCellViewModel(task: tlTask))
         }
         
         let sectionName = fetchHourStringFromTimestamp(startHour) + " - " + fetchHourStringFromTimestamp(endHour)
         
-        return TaskListSection(sectionName: sectionName, tasks: tlTasks)
+        taskListSectionViewModel.sectionName = sectionName
+        
+        return taskListSectionViewModel
     }
     
     private func convertDataToTLTask(from task: TaskRealm) -> TLTask {
