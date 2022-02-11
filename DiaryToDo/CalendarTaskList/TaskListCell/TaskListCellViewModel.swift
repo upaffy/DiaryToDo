@@ -17,6 +17,7 @@ protocol TaskListCellViewModelProtocol {
 }
 
 protocol TaskListSectionViewModelProtocol {
+    var sectionName: String { get }
     var tasks: [TaskListCellViewModelProtocol] { get }
 }
 
