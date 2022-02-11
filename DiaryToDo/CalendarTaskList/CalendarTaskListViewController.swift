@@ -29,14 +29,11 @@ class CalendarTaskListViewController: UIViewController {
     private var taskListSectionViewModels: [TaskListSectionViewModelProtocol] = []
     
     private lazy var collectionView: UICollectionView = {
-        return setCollectionView()
+        return setupCollectionView()
     }()
     
     private lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        
-        return tableView
+        return setupTableView()
     }()
     
     private lazy var leftButton: UIButton = {
@@ -104,7 +101,7 @@ class CalendarTaskListViewController: UIViewController {
         }
     }
     
-    private func setCollectionView() -> UICollectionView {
+    private func setupCollectionView() -> UICollectionView {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
@@ -122,6 +119,37 @@ class CalendarTaskListViewController: UIViewController {
         collectionView.delegate = self
         
         return collectionView
+    }
+    
+    private func setupTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.register(
+            TaskListCell.self,
+            forCellReuseIdentifier: TaskListCellViewModel.reuseIdentifier
+        )
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        return tableView
+    }
+}
+
+// MARK: - CalendarTaskListViewInputProtocol
+extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String) {
+        navigationItem.title = navItemTitle
+        calendarSectionViewModel = calendarSection
+        
+        collectionView.reloadData()
+    }
+    
+    func reloadTaskList(for sections: [TaskListSectionViewModel]) {
+        taskListSectionViewModels = sections
+        
+        tableView.reloadData()
     }
 }
 
@@ -161,18 +189,35 @@ extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - CalendarTaskListViewInputProtocol
-extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
-    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String) {
-        navigationItem.title = navItemTitle
-        calendarSectionViewModel = calendarSection
-        
-        collectionView.reloadData()
+// MARK: - UITableViewDataSource
+extension CalendarTaskListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        taskListSectionViewModels[section].tasks.count
     }
     
-    func reloadTaskList(for sections: [TaskListSectionViewModel]) {
-        taskListSectionViewModels = sections
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let taskListCellViewModel = taskListSectionViewModels[indexPath.section].tasks[indexPath.row]
+        // swiftlint:disable force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: TaskListCellViewModel.reuseIdentifier,
+                                                 for: indexPath) as! TaskListCell
+        // swiftlint:enable force_cast
         
-        tableView.reloadData()
+        cell.viewModel = taskListCellViewModel
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        taskListSectionViewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        taskListSectionViewModels[section].sectionName
+    }
+}
+
+extension CalendarTaskListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
     }
 }
