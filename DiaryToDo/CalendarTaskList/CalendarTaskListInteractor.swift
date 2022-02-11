@@ -194,7 +194,7 @@ extension CalendarTaskListInteractor {
     
     // swiftlint:disable:next line_length
     private func defineTasks(between lhs: TimeInterval, and rhs: TimeInterval, from tasks: Results<TaskRealm>) -> Results<TaskRealm> {
-        let predicate = NSPredicate(format: "dateStart BETWEEN {%@, %@}", lhs, rhs)
+        let predicate = NSPredicate(format: "dateStart BETWEEN {%@, %@}", NSNumber(value: lhs), NSNumber(value: rhs))
         
         return tasks.filter(predicate)
     }
