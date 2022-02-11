@@ -11,7 +11,6 @@
 		E92505FB27B4F8FF000C0209 /* TaskListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92505FA27B4F8FF000C0209 /* TaskListCell.swift */; };
 		E92505FD27B4F90E000C0209 /* TaskListCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92505FC27B4F90E000C0209 /* TaskListCellViewModel.swift */; };
 		E925060127B4FD1E000C0209 /* TLTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925060027B4FD1E000C0209 /* TLTask.swift */; };
-		E925060327B515E7000C0209 /* TaskListSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925060227B515E7000C0209 /* TaskListSection.swift */; };
 		E925060627B54C7B000C0209 /* StorageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925060527B54C7B000C0209 /* StorageManager.swift */; };
 		E925060827B55169000C0209 /* TaskRealm.swift in Sources */ = {isa = PBXBuildFile; fileRef = E925060727B55169000C0209 /* TaskRealm.swift */; };
 		E9A1D96027B1042B00C03D9B /* CalendarTaskListConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */; };
@@ -56,7 +55,6 @@
 		E92505FA27B4F8FF000C0209 /* TaskListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListCell.swift; sourceTree = "<group>"; };
 		E92505FC27B4F90E000C0209 /* TaskListCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListCellViewModel.swift; sourceTree = "<group>"; };
 		E925060027B4FD1E000C0209 /* TLTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TLTask.swift; sourceTree = "<group>"; };
-		E925060227B515E7000C0209 /* TaskListSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListSection.swift; sourceTree = "<group>"; };
 		E925060527B54C7B000C0209 /* StorageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageManager.swift; sourceTree = "<group>"; };
 		E925060727B55169000C0209 /* TaskRealm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRealm.swift; sourceTree = "<group>"; };
 		E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListConfigurator.swift; sourceTree = "<group>"; };
@@ -146,8 +144,8 @@
 			children = (
 				E9DA029A27A9260900E04328 /* CalendarTaskListViewController.swift */,
 				E9A1D96227B1052200C03D9B /* CalendarTaskListPresenter.swift */,
-				E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */,
 				E9A1D96427B1063200C03D9B /* CalendarTaskListInteractor.swift */,
+				E9A1D95F27B1042B00C03D9B /* CalendarTaskListConfigurator.swift */,
 				E9A1D96627B10C9E00C03D9B /* CalendarCell */,
 				E92505F927B4F8D8000C0209 /* TaskListCell */,
 				E9A1D96E27B1793700C03D9B /* ArrowButton.swift */,
@@ -169,7 +167,6 @@
 			children = (
 				E9CDF9D427B0433600CC8857 /* CalendarDay.swift */,
 				E9A1D96A27B13EFA00C03D9B /* MonthType.swift */,
-				E925060227B515E7000C0209 /* TaskListSection.swift */,
 				E925060027B4FD1E000C0209 /* TLTask.swift */,
 				E925060727B55169000C0209 /* TaskRealm.swift */,
 			);
@@ -449,7 +446,6 @@
 			files = (
 				E9A1D96327B1052200C03D9B /* CalendarTaskListPresenter.swift in Sources */,
 				E9DA029B27A9260900E04328 /* CalendarTaskListViewController.swift in Sources */,
-				E925060327B515E7000C0209 /* TaskListSection.swift in Sources */,
 				E925060127B4FD1E000C0209 /* TLTask.swift in Sources */,
 				E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */,
 				E92505FB27B4F8FF000C0209 /* TaskListCell.swift in Sources */,
