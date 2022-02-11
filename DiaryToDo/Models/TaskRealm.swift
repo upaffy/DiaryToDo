@@ -8,7 +8,7 @@
 import RealmSwift
 
 class TaskRealm: Object {
-    @Persisted var id = 0
+    @Persisted(primaryKey: true) var id = 0
     @Persisted var dateStart = TimeInterval()
     @Persisted var dateFinish = TimeInterval()
     @Persisted var name = ""
