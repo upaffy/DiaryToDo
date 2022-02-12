@@ -6,6 +6,7 @@
 //
 
 import RealmSwift
+import Foundation
 
 protocol CalendarTaskListInteractorOutputProtocol: AnyObject {
     func daysDidReceive(with dataStore: CalendarDataStore)
@@ -68,7 +69,14 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
             defineBaseDate(by: monthType ?? .currentMonth)
         }
         
-        fetchDays()
+        let days = fetchDays()
+        
+        let month = fetchMonthString(from: baseDate)
+        let year = fetchYearString(from: baseDate)
+        
+        let dataStore = CalendarDataStore(days: days, displayedMonth: month, displayedYear: year)
+        
+        presenter.daysDidReceive(with: dataStore)
     }
     
     func fetchTasksForSelectedDay() {
@@ -77,13 +85,24 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
             sections = self.prepareSections(from: tasks)
         }
         
-        presenter.tasksDidReceive(with: TaskListDataStore(sections: sections))
+        let day = fetchDayString(from: selectedDate)
+        let month = fetchMonthString(from: selectedDate)
+        let year = fetchYearString(from: selectedDate)
+        
+        let dataStore = TaskListDataStore(
+            sections: sections,
+            displayedDay: day,
+            displayedMonth: month,
+            displayedYear: year
+        )
+        
+        presenter.tasksDidReceive(with: dataStore)
     }
 }
 
 // MARK: - Private methods
 extension CalendarTaskListInteractor {
-    private func fetchDays() {
+    private func fetchDays() -> [CalendarDay] {
         days = weekdays
         
         var day = firstDayOfMonth
@@ -111,12 +130,7 @@ extension CalendarTaskListInteractor {
             days.append(calendarDay)
         }
         
-        let month = fetchMonthString(from: baseDate)
-        let year = fetchYearString(from: baseDate)
-        
-        let dataStore = CalendarDataStore(days: days, displayedMonth: month, displayedYear: year)
-        
-        presenter.daysDidReceive(with: dataStore)
+        return days
     }
     
     private func defineBaseDate(by index: Int) {
@@ -178,6 +192,12 @@ extension CalendarTaskListInteractor {
     
     private func addMonth(to date: Date) -> Date {
         return calendar.date(byAdding: .month, value: 1, to: date) ?? Date()
+    }
+    
+    private func fetchDayString(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter.string(from: date)
     }
     
     private func fetchMonthString(from date: Date) -> String {

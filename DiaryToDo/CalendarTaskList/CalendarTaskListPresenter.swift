@@ -15,6 +15,9 @@ struct CalendarDataStore {
 
 struct TaskListDataStore {
     let sections: [TaskListSectionViewModel]
+    let displayedDay: String
+    let displayedMonth: String
+    let displayedYear: String
 }
 
 class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
@@ -56,6 +59,7 @@ extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
     }
     
     func tasksDidReceive(with dataStore: TaskListDataStore) {
-        view.reloadTaskList(for: dataStore.sections)
+        let dayTitle = dataStore.displayedMonth + " " + dataStore.displayedDay + ", " + dataStore.displayedYear
+        view.reloadTaskList(for: dataStore.sections, with: dayTitle)
     }
 }

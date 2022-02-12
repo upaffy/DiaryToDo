@@ -17,8 +17,8 @@ protocol CalendarTaskListViewOutputProtocol {
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
-    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String)
-    func reloadTaskList(for sections: [TaskListSectionViewModel])
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String)
+    func reloadTaskList(for taskListSections: [TaskListSectionViewModel], with dayTitle: String)
 }
 
 class CalendarTaskListViewController: UIViewController {
@@ -34,6 +34,17 @@ class CalendarTaskListViewController: UIViewController {
     
     private lazy var tableView: UITableView = {
         return setupTableView()
+    }()
+    
+    private lazy var selectedDayLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        label.textAlignment = .center
+        label.text = "12 February"
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        
+        return label
     }()
     
     private lazy var leftButton: UIButton = {
@@ -59,7 +70,7 @@ class CalendarTaskListViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
-        addSubviews(collectionView, leftButton, rightButton, tableView)
+        addSubviews(collectionView, leftButton, rightButton, selectedDayLabel, tableView)
         setupConstraints()
     }
     
@@ -86,7 +97,11 @@ class CalendarTaskListViewController: UIViewController {
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
             
-            tableView.topAnchor.constraint(equalTo: collectionView.bottomAnchor),
+            selectedDayLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+            selectedDayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            selectedDayLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: selectedDayLabel.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
@@ -146,8 +161,9 @@ extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
         collectionView.reloadData()
     }
     
-    func reloadTaskList(for sections: [TaskListSectionViewModel]) {
-        taskListSectionViewModels = sections
+    func reloadTaskList(for taskListSections: [TaskListSectionViewModel], with dayTitle: String) {
+        selectedDayLabel.text = dayTitle
+        taskListSectionViewModels = taskListSections
         
         tableView.reloadData()
     }
