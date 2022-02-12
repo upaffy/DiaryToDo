@@ -32,6 +32,15 @@ class CalendarTaskListViewController: UIViewController {
         return setupCollectionView()
     }()
     
+    private lazy var divider: UIView = {
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
+        
+        divider.backgroundColor = .black
+        
+        return divider
+    }()
+    
     private lazy var tableView: UITableView = {
         return setupTableView()
     }()
@@ -70,7 +79,15 @@ class CalendarTaskListViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
-        addSubviews(collectionView, leftButton, rightButton, selectedDayLabel, tableView)
+        addSubviews(
+            collectionView,
+            leftButton,
+            rightButton,
+            divider,
+            selectedDayLabel,
+            tableView
+        )
+        
         setupConstraints()
     }
     
@@ -96,6 +113,11 @@ class CalendarTaskListViewController: UIViewController {
             collectionView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            
+            divider.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+            divider.heightAnchor.constraint(equalToConstant: 1),
+            divider.widthAnchor.constraint(equalTo: view.widthAnchor),
+            divider.bottomAnchor.constraint(equalTo: selectedDayLabel.topAnchor, constant: -10),
             
             selectedDayLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
             selectedDayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
