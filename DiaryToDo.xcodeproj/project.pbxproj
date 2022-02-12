@@ -20,6 +20,10 @@
 		E9A1D96B27B13EFA00C03D9B /* MonthType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96A27B13EFA00C03D9B /* MonthType.swift */; };
 		E9A1D96F27B1793700C03D9B /* ArrowButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A1D96E27B1793700C03D9B /* ArrowButton.swift */; };
 		E9C7912927B7AD57003B2ECB /* CalendarTaskListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C7912827B7AD57003B2ECB /* CalendarTaskListRouter.swift */; };
+		E9C7914B27B7DD73003B2ECB /* TaskAdditionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C7914A27B7DD73003B2ECB /* TaskAdditionViewController.swift */; };
+		E9C7914D27B7DD80003B2ECB /* TaskAdditionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C7914C27B7DD80003B2ECB /* TaskAdditionPresenter.swift */; };
+		E9C7914F27B7DD96003B2ECB /* TaskAdditionInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C7914E27B7DD96003B2ECB /* TaskAdditionInteractor.swift */; };
+		E9C7915127B7DDBC003B2ECB /* TaskAdditionConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C7915027B7DDBC003B2ECB /* TaskAdditionConfigurator.swift */; };
 		E9CDF9D327B0430B00CC8857 /* CalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF9D227B0430B00CC8857 /* CalendarCell.swift */; };
 		E9CDF9D527B0433600CC8857 /* CalendarDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9CDF9D427B0433600CC8857 /* CalendarDay.swift */; };
 		E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA029627A9260900E04328 /* AppDelegate.swift */; };
@@ -65,6 +69,10 @@
 		E9A1D96A27B13EFA00C03D9B /* MonthType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MonthType.swift; sourceTree = "<group>"; };
 		E9A1D96E27B1793700C03D9B /* ArrowButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowButton.swift; sourceTree = "<group>"; };
 		E9C7912827B7AD57003B2ECB /* CalendarTaskListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarTaskListRouter.swift; sourceTree = "<group>"; };
+		E9C7914A27B7DD73003B2ECB /* TaskAdditionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionViewController.swift; sourceTree = "<group>"; };
+		E9C7914C27B7DD80003B2ECB /* TaskAdditionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionPresenter.swift; sourceTree = "<group>"; };
+		E9C7914E27B7DD96003B2ECB /* TaskAdditionInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionInteractor.swift; sourceTree = "<group>"; };
+		E9C7915027B7DDBC003B2ECB /* TaskAdditionConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskAdditionConfigurator.swift; sourceTree = "<group>"; };
 		E9CDF9D227B0430B00CC8857 /* CalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCell.swift; sourceTree = "<group>"; };
 		E9CDF9D427B0433600CC8857 /* CalendarDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarDay.swift; sourceTree = "<group>"; };
 		E9DA029327A9260900E04328 /* DiaryToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DiaryToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -176,6 +184,17 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		E9C7912B27B7D990003B2ECB /* TaskAddition */ = {
+			isa = PBXGroup;
+			children = (
+				E9C7914A27B7DD73003B2ECB /* TaskAdditionViewController.swift */,
+				E9C7914C27B7DD80003B2ECB /* TaskAdditionPresenter.swift */,
+				E9C7914E27B7DD96003B2ECB /* TaskAdditionInteractor.swift */,
+				E9C7915027B7DDBC003B2ECB /* TaskAdditionConfigurator.swift */,
+			);
+			path = TaskAddition;
+			sourceTree = "<group>";
+		};
 		E9DA028A27A9260900E04328 = {
 			isa = PBXGroup;
 			children = (
@@ -201,6 +220,7 @@
 		E9DA029527A9260900E04328 /* DiaryToDo */ = {
 			isa = PBXGroup;
 			children = (
+				E9C7912B27B7D990003B2ECB /* TaskAddition */,
 				E9A1D96127B1043A00C03D9B /* CalendarTaskList */,
 				E9A1D96927B126B500C03D9B /* Models */,
 				E925060427B54C48000C0209 /* Services */,
@@ -452,10 +472,13 @@
 				E9DA029B27A9260900E04328 /* CalendarTaskListViewController.swift in Sources */,
 				E925060127B4FD1E000C0209 /* TLTask.swift in Sources */,
 				E9DA029727A9260900E04328 /* AppDelegate.swift in Sources */,
+				E9C7914D27B7DD80003B2ECB /* TaskAdditionPresenter.swift in Sources */,
 				E92505FB27B4F8FF000C0209 /* TaskListCell.swift in Sources */,
+				E9C7914F27B7DD96003B2ECB /* TaskAdditionInteractor.swift in Sources */,
 				E9A1D96027B1042B00C03D9B /* CalendarTaskListConfigurator.swift in Sources */,
 				E92505FD27B4F90E000C0209 /* TaskListCellViewModel.swift in Sources */,
 				E9A1D96827B10CC200C03D9B /* CalendarCellViewModel.swift in Sources */,
+				E9C7914B27B7DD73003B2ECB /* TaskAdditionViewController.swift in Sources */,
 				E9CDF9D527B0433600CC8857 /* CalendarDay.swift in Sources */,
 				E9A1D96527B1063200C03D9B /* CalendarTaskListInteractor.swift in Sources */,
 				E9A1D96F27B1793700C03D9B /* ArrowButton.swift in Sources */,
@@ -463,6 +486,7 @@
 				E9A1D96B27B13EFA00C03D9B /* MonthType.swift in Sources */,
 				E925060827B55169000C0209 /* TaskRealm.swift in Sources */,
 				E9CDF9D327B0430B00CC8857 /* CalendarCell.swift in Sources */,
+				E9C7915127B7DDBC003B2ECB /* TaskAdditionConfigurator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
