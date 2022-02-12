@@ -29,6 +29,16 @@ class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputPr
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+        tapGesture.cancelsTouchesInView = true
+        tableView.addGestureRecognizer(tapGesture)
+        
+        taskNameTF.delegate = self
+        
+        endHourPicker.addTarget(self, action: #selector(hourPickerDidChange), for: .valueChanged)
+        startHourPicker.addTarget(self, action: #selector(hourPickerDidChange), for: .valueChanged)
+        
         presenter.viewDidLoad()
     }
     
@@ -41,5 +51,29 @@ class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputPr
     
     func displaySelectedDate(_ date: Date) {
         dayPicker.setDate(date, animated: false)
+    }
+}
+
+// MARK: - UITextFieldDelegate
+extension TaskAdditionViewController: UITextFieldDelegate {
+    func textFieldDidChangeSelection(_ textField: UITextField) {
+        if textField.text?.count != 0 {
+            saveButton.isEnabled = true
+        } else {
+            saveButton.isEnabled = false
+        }
+    }
+}
+
+// MARK: - Private methods
+extension TaskAdditionViewController {
+    @objc private func hideKeyboard() {
+        tableView.endEditing(true)
+    }
+    
+    @objc private func hourPickerDidChange() {
+        if startHourPicker.date > endHourPicker.date {
+            startHourPicker.setDate(endHourPicker.date, animated: true)
+        }
     }
 }
