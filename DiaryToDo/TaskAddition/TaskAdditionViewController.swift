@@ -15,6 +15,6 @@ protocol TaskAdditionViewInputProtocol: AnyObject {
     
 }
 
-class TaskAdditionViewController: UIViewController, TaskAdditionViewInputProtocol {
+class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputProtocol {
     var presenter: TaskAdditionViewOutputProtocol!
 }
