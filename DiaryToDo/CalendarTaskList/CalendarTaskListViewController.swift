@@ -181,8 +181,9 @@ class CalendarTaskListViewController: UIViewController {
 // MARK: - Navigation
 extension CalendarTaskListViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if let taskAdditionVC = segue.destination as? TaskAdditionViewController {
-            
+        guard let navigationController = segue.destination as? UINavigationController else { return }
+        
+        if let taskAdditionVC = navigationController.children.first as? TaskAdditionViewController {
             let configurator: TaskAdditionConfiguratorInputProtocol = TaskAdditionConfigurator()
             guard let selectedDate = sender as? Date else { return }
             
