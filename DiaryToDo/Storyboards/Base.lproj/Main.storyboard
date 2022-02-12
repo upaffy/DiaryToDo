@@ -19,11 +19,33 @@
                         <viewLayoutGuide key="safeArea" id="t16-gW-hSU"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Month n Year" id="w1I-nu-vBP"/>
+                    <navigationItem key="navigationItem" title="Month n Year" id="w1I-nu-vBP">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="3mK-rc-1YZ">
+                            <color key="tintColor" systemColor="systemRedColor"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="UbP-my-T4V" kind="presentation" identifier="OpenAddController" id="iXa-Zm-lq1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nt-eV-oOf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="971.01449275362324" y="20.758928571428569"/>
+            <point key="canvasLocation" x="967" y="21"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="azg-rz-ecC">
+            <objects>
+                <viewController id="UbP-my-T4V" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="65E-vS-ini">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="Ikv-Ri-52o"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R6b-il-c4t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1841" y="21"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0l5-rt-MzJ">
@@ -47,6 +69,9 @@
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemRedColor">
+            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
