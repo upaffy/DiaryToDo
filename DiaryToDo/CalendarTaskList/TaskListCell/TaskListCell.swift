@@ -20,6 +20,8 @@ class TaskListCell: UITableViewCell, TaskListCellViewModelRepresentable {
     
     private lazy var mainText: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        
         label.font = UIFont.boldSystemFont(ofSize: 16)
         
         return label
@@ -27,6 +29,8 @@ class TaskListCell: UITableViewCell, TaskListCellViewModelRepresentable {
     
     private lazy var secondaryText: UILabel = {
         let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+
         label.font = UIFont.systemFont(ofSize: 16)
         label.numberOfLines = 0
         
