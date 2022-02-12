@@ -23,6 +23,7 @@ struct TaskListDataStore {
 class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     unowned let view: CalendarTaskListViewInputProtocol
     var interactor: CalendarTaskListInteractorInputProtocol!
+    var router: CalendarTaskListRouterInputProtocol!
     
     required init(view: CalendarTaskListViewInputProtocol) {
         self.view = view
