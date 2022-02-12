@@ -49,7 +49,7 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     
     func addButtonPressed() {
         let selectedDate = interactor.getSelectedDate()
-        router.openAddTaskViewController(with: selectedDate)
+        router.openTaskAdditionViewController(with: selectedDate)
     }
 }
 

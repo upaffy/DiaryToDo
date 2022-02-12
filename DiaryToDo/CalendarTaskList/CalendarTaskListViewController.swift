@@ -178,6 +178,19 @@ class CalendarTaskListViewController: UIViewController {
     }
 }
 
+// MARK: - Navigation
+extension CalendarTaskListViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let taskAdditionVC = segue.destination as? TaskAdditionViewController {
+            
+            let configurator: TaskAdditionConfiguratorInputProtocol = TaskAdditionConfigurator()
+            guard let selectedDate = sender as? Date else { return }
+            
+            configurator.configure(with: taskAdditionVC, and: selectedDate)
+        }
+    }
+}
+
 // MARK: - CalendarTaskListViewInputProtocol
 extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
     func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String) {
