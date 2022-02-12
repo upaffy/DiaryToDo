@@ -17,6 +17,7 @@ protocol CalendarTaskListInteractorInputProtocol {
     init(presenter: CalendarTaskListInteractorOutputProtocol)
     func fetchDays(for monthType: MonthType?, and dayIndex: Int?)
     func fetchTasksForSelectedDay()
+    func getSelectedDate() -> Date
 }
 
 class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
@@ -97,6 +98,10 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
         )
         
         presenter.tasksDidReceive(with: dataStore)
+    }
+    
+    func getSelectedDate() -> Date {
+        selectedDate
     }
 }
 
