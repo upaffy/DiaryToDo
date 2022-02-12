@@ -14,6 +14,7 @@ protocol CalendarTaskListViewOutputProtocol {
     func leftButtonPressed()
     func rightButtonPressed()
     func collectionViewCellDidSelect(at indexPath: IndexPath)
+    func addButtonPressed()
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
@@ -91,6 +92,10 @@ class CalendarTaskListViewController: UIViewController {
         setupConstraints()
     }
     
+    @IBAction func addButtonPressed(_ sender: Any) {
+        presenter.addButtonPressed()
+    }
+    
     @objc private func showPreviousMonth(_ sender: Any) {
         presenter.leftButtonPressed()
     }
@@ -119,7 +124,6 @@ class CalendarTaskListViewController: UIViewController {
             divider.widthAnchor.constraint(equalTo: view.widthAnchor),
             divider.bottomAnchor.constraint(equalTo: selectedDayLabel.topAnchor, constant: -10),
             
-            selectedDayLabel.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
             selectedDayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             selectedDayLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             

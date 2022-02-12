@@ -46,6 +46,11 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
         interactor.fetchDays(for: .currentMonth, and: indexPath.item)
         interactor.fetchTasksForSelectedDay()
     }
+    
+    func addButtonPressed() {
+        let selectedDate = interactor.getSelectedDate()
+        router.openAddTaskViewController(with: selectedDate)
+    }
 }
 
 // MARK: - CalendarTaskListInteractorOutputProtocol

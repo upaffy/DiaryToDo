@@ -22,6 +22,9 @@
                     <navigationItem key="navigationItem" title="Month n Year" id="w1I-nu-vBP">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3mK-rc-1YZ">
                             <color key="tintColor" systemColor="systemRedColor"/>
+                            <connections>
+                                <action selector="addButtonPressed:" destination="3QG-Lp-9LV" id="icB-wq-01M"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
