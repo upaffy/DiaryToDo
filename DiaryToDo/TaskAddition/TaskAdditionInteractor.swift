@@ -8,11 +8,12 @@
 import Foundation
 
 protocol TaskAdditionInteractorOutputProtocol: AnyObject {
-    
+    func receiveSelectedDate(_ dataStore: TaskAdditionDataStore)
 }
 
 protocol TaskAdditionInteractorInputProtocol {
     init(presenter: TaskAdditionInteractorOutputProtocol, selectedDate: Date)
+    func fetchSelectedDate()
 }
 
 class TaskAdditionInteractor: TaskAdditionInteractorInputProtocol {
@@ -23,5 +24,10 @@ class TaskAdditionInteractor: TaskAdditionInteractorInputProtocol {
     required init(presenter: TaskAdditionInteractorOutputProtocol, selectedDate: Date) {
         self.presenter = presenter
         self.selectedDate = selectedDate
+    }
+    
+    func fetchSelectedDate() {
+        let dataStore = TaskAdditionDataStore(selectedDate: selectedDate)
+        presenter.receiveSelectedDate(dataStore)
     }
 }
