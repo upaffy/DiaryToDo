@@ -37,7 +37,7 @@ class CalendarTaskListViewController: UIViewController {
         let divider = UIView()
         divider.translatesAutoresizingMaskIntoConstraints = false
         
-        divider.backgroundColor = .black
+        divider.backgroundColor = .lightGray
         
         return divider
     }()
