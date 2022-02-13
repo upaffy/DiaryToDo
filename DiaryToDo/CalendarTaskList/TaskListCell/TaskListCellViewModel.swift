@@ -10,8 +10,8 @@ protocol TaskListCellViewModelProtocol {
     static var reuseIdentifier: String { get }
     var name: String { get }
     var description: String { get }
-    var timeStart: TimeInterval { get }
-    var timeFinish: TimeInterval { get }
+    var dateStart: Date { get }
+    var dateFinish: Date { get }
     
     init(task: TLTask)
 }
@@ -32,11 +32,11 @@ class TaskListCellViewModel: TaskListCellViewModelProtocol {
         task.description
     }
     
-    var timeStart: TimeInterval {
+    var dateStart: Date {
         task.dateStart
     }
     
-    var timeFinish: TimeInterval {
+    var dateFinish: Date {
         task.dateFinish
     }
     

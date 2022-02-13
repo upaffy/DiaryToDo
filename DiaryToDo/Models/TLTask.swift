@@ -9,8 +9,8 @@ import Foundation
 
 struct TLTask {
     var id: Int
-    var dateStart: TimeInterval
-    var dateFinish: TimeInterval
+    var dateStart: Date
+    var dateFinish: Date
     var name: String
     var description: String
 }

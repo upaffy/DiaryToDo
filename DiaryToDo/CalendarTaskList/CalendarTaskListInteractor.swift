@@ -271,8 +271,8 @@ extension CalendarTaskListInteractor {
     private func convertDataToTLTask(from task: TaskRealm) -> TLTask {
         TLTask(
             id: task.id,
-            dateStart: task.dateStart,
-            dateFinish: task.dateFinish,
+            dateStart: Date(timeIntervalSince1970: task.dateStart),
+            dateFinish: Date(timeIntervalSince1970: task.dateFinish),
             name: task.name,
             description: task.taskDescription
         )
