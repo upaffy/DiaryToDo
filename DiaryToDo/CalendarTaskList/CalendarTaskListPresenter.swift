@@ -25,6 +25,8 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     var interactor: CalendarTaskListInteractorInputProtocol!
     var router: CalendarTaskListRouterInputProtocol!
     
+    private var taskListDataStore: TaskListDataStore?
+    
     required init(view: CalendarTaskListViewInputProtocol) {
         self.view = view
     }
@@ -55,6 +57,21 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
         let selectedDate = interactor.getSelectedDate()
         router.openTaskAdditionViewController(with: selectedDate)
     }
+    
+    func didTapCell(at indexPath: IndexPath) {
+        guard let task = taskListDataStore?.sections[indexPath.section].tasks[indexPath.row] else {
+            return
+        }
+        
+        let tlTask = TLTask(
+            dateStart: task.dateStart,
+            dateFinish: task.dateFinish,
+            name: task.name,
+            description: task.description
+        )
+        
+        router.openTaskDetailsViewController(with: tlTask)
+    }
 }
 
 // MARK: - CalendarTaskListInteractorOutputProtocol
@@ -69,6 +86,8 @@ extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
     }
     
     func tasksDidReceive(with dataStore: TaskListDataStore) {
+        taskListDataStore = dataStore
+        
         let dayTitle = dataStore.displayedMonth + " " + dataStore.displayedDay + ", " + dataStore.displayedYear
         view.reloadTaskList(for: dataStore.sections, with: dayTitle)
     }

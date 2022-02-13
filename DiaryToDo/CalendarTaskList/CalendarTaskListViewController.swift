@@ -15,6 +15,7 @@ protocol CalendarTaskListViewOutputProtocol {
     func rightButtonPressed()
     func collectionViewCellDidSelect(at indexPath: IndexPath)
     func addButtonPressed()
+    func didTapCell(at indexPath: IndexPath)
     func taskAdditionVCDidDisapear()
 }
 
@@ -182,9 +183,21 @@ class CalendarTaskListViewController: UIViewController {
 // MARK: - Navigation
 extension CalendarTaskListViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        guard let navigationController = segue.destination as? UINavigationController else { return }
         
-        if let taskAdditionVC = navigationController.children.first as? TaskAdditionViewController {
+        if let taskDetailsVC = segue.destination as? TaskDetailsViewController {
+            let configurator: TaskDetailsConfiguratorInputProtocol = TaskDetailsConfigurator()
+            guard let task = sender as? TLTask else { return }
+            
+            configurator.configure(with: taskDetailsVC, and: task)
+        } else {
+            
+            guard
+                let navigationController = segue.destination as? UINavigationController,
+                let taskAdditionVC = navigationController.children.first as? TaskAdditionViewController
+            else {
+                return
+            }
+            
             let configurator: TaskAdditionConfiguratorInputProtocol = TaskAdditionConfigurator()
             guard let selectedDate = sender as? Date else { return }
             
@@ -284,7 +297,7 @@ extension CalendarTaskListViewController: UITableViewDataSource {
 
 extension CalendarTaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath.row)
         tableView.deselectRow(at: indexPath, animated: true)
+        presenter.didTapCell(at: indexPath)
     }
 }

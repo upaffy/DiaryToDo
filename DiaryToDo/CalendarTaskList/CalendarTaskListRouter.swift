@@ -10,6 +10,7 @@ import Foundation
 protocol CalendarTaskListRouterInputProtocol {
     init(viewController: CalendarTaskListViewController)
     func openTaskAdditionViewController(with selectedDate: Date)
+    func openTaskDetailsViewController(with task: TLTask)
 }
 
 class CalendarTaskListRouter: CalendarTaskListRouterInputProtocol {
@@ -21,5 +22,9 @@ class CalendarTaskListRouter: CalendarTaskListRouterInputProtocol {
     
     func openTaskAdditionViewController(with selectedDate: Date) {
         viewController.performSegue(withIdentifier: "OpenAdditionController", sender: selectedDate)
+    }
+    
+    func openTaskDetailsViewController(with task: TLTask) {
+        viewController.performSegue(withIdentifier: "OpenDetailsController", sender: task)
     }
 }

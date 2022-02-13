@@ -28,7 +28,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="dsa-LG-iLh" kind="presentation" identifier="OpenAdditionController" id="xCd-j3-Ta6"/>
+                        <segue destination="w9u-2K-ofa" kind="presentation" identifier="OpenAdditionController" id="Ifp-Fc-JJ9"/>
+                        <segue destination="Nvb-22-U5W" kind="show" identifier="OpenDetailsController" id="wZd-Nd-RYX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nt-eV-oOf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -209,23 +210,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3P-5E-8Fc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="IQy-AK-dlF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="2657.971014492754" y="20.758928571428569"/>
+            <point key="canvasLocation" x="2828.985507246377" y="-291.29464285714283"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="qrp-NJ-ztC">
+        <!--Task Details View Controller-->
+        <scene sceneID="p6D-Rx-rIV">
             <objects>
-                <navigationController id="dsa-LG-iLh" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Muq-kg-xzU">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
+                <viewController id="Nvb-22-U5W" customClass="TaskDetailsViewController" customModule="DiaryToDo" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EiH-CI-F2s">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Start" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hNb-D7-wWc">
+                                <rect key="frame" x="16" y="160" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date Finish" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fgZ-a3-rCi">
+                                <rect key="frame" x="16" y="201" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DYs-pd-LsX">
+                                <rect key="frame" x="16" y="252" width="382" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" systemColor="systemGrayColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="g82-oM-SNz"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hNb-D7-wWc" firstAttribute="leading" secondItem="g82-oM-SNz" secondAttribute="leading" constant="16" id="FXp-6C-IPy"/>
+                            <constraint firstItem="DYs-pd-LsX" firstAttribute="leading" secondItem="g82-oM-SNz" secondAttribute="leading" constant="16" id="IGy-b9-dNm"/>
+                            <constraint firstItem="g82-oM-SNz" firstAttribute="trailing" secondItem="hNb-D7-wWc" secondAttribute="trailing" constant="16" id="JJI-pI-cml"/>
+                            <constraint firstItem="g82-oM-SNz" firstAttribute="trailing" secondItem="DYs-pd-LsX" secondAttribute="trailing" constant="16" id="Thh-gP-cPO"/>
+                            <constraint firstItem="fgZ-a3-rCi" firstAttribute="top" secondItem="hNb-D7-wWc" secondAttribute="bottom" constant="20" id="Uhw-AA-M5q"/>
+                            <constraint firstItem="DYs-pd-LsX" firstAttribute="top" secondItem="fgZ-a3-rCi" secondAttribute="bottom" constant="30" id="VP3-7g-kCv"/>
+                            <constraint firstItem="fgZ-a3-rCi" firstAttribute="leading" secondItem="g82-oM-SNz" secondAttribute="leading" constant="16" id="cPa-Nd-KUG"/>
+                            <constraint firstItem="hNb-D7-wWc" firstAttribute="top" secondItem="g82-oM-SNz" secondAttribute="top" constant="20" id="tik-fP-VM8"/>
+                            <constraint firstItem="g82-oM-SNz" firstAttribute="trailing" secondItem="fgZ-a3-rCi" secondAttribute="trailing" constant="16" id="uEq-Us-Ivg"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="always" id="Adm-Ws-vwl"/>
                     <connections>
-                        <segue destination="u9S-ld-E4D" kind="relationship" relationship="rootViewController" id="jet-zy-HVB"/>
+                        <outlet property="dateFinishLabel" destination="fgZ-a3-rCi" id="CCB-rb-G2l"/>
+                        <outlet property="dateStartLabel" destination="hNb-D7-wWc" id="IZ7-3O-MlC"/>
+                        <outlet property="descriptionLabel" destination="DYs-pd-LsX" id="zUH-kH-IQ0"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="DaI-Ln-OzB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Kld-LA-hI1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1814" y="21"/>
+            <point key="canvasLocation" x="1919" y="484"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="0l5-rt-MzJ">
@@ -245,10 +282,31 @@
             </objects>
             <point key="canvasLocation" x="60.869565217391312" y="20.758928571428569"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="CGp-fQ-aBM">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="w9u-2K-ofa" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="hOH-Fc-RrC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="56"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="u9S-ld-E4D" kind="relationship" relationship="rootViewController" id="g8y-4N-1iT"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bti-4g-dbB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1918.840579710145" y="-291.29464285714283"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
             <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
