@@ -32,7 +32,6 @@ class TaskListCell: UITableViewCell, TaskListCellViewModelRepresentable {
         label.translatesAutoresizingMaskIntoConstraints = false
 
         label.font = UIFont.systemFont(ofSize: 16)
-        label.numberOfLines = 0
         
         return label
     }()
@@ -52,10 +51,12 @@ class TaskListCell: UITableViewCell, TaskListCellViewModelRepresentable {
         
         NSLayoutConstraint.activate([
             mainText.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5),
-            mainText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-            mainText.bottomAnchor.constraint(equalTo: secondaryText.topAnchor, constant: 2),
+            mainText.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            mainText.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
+            mainText.bottomAnchor.constraint(greaterThanOrEqualTo: secondaryText.topAnchor, constant: 2),
             
-            secondaryText.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
+            secondaryText.leadingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.leadingAnchor),
+            secondaryText.trailingAnchor.constraint(equalTo: contentView.layoutMarginsGuide.trailingAnchor),
             secondaryText.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5)
         ])
     }

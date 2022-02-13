@@ -276,10 +276,15 @@ extension CalendarTaskListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         taskListSectionViewModels[section].sectionName
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        50
+    }
 }
 
 extension CalendarTaskListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }
