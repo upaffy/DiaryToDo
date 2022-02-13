@@ -10,10 +10,12 @@ import UIKit
 protocol TaskAdditionViewOutputProtocol {
     init(view: TaskAdditionViewInputProtocol)
     func viewDidLoad()
+    func saveButtonPressed(day: Date, timeStart: Date, timeEnd: Date, name: String, description: String)
 }
 
 protocol TaskAdditionViewInputProtocol: AnyObject {
     func displaySelectedDate(_ date: Date)
+    func handleSaveResult(success: Bool)
 }
 
 class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputProtocol {
@@ -47,10 +49,25 @@ class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputPr
     }
     
     @IBAction func saveButtonPressed(_ sender: Any) {
+        presenter.saveButtonPressed(
+            day: dayPicker.date,
+            timeStart: startHourPicker.date,
+            timeEnd: endHourPicker.date,
+            name: taskNameTF.text ?? "no Title",
+            description: descriptionTextView.text
+        )
     }
     
     func displaySelectedDate(_ date: Date) {
         dayPicker.setDate(date, animated: false)
+    }
+    
+    func handleSaveResult(success: Bool) {
+        if success {
+            dismiss(animated: true)
+        } else {
+            showAlert(title: "Ooops", message: "Something went wrong")
+        }
     }
 }
 
@@ -81,5 +98,15 @@ extension TaskAdditionViewController {
         if startHourPicker.date > endHourPicker.date {
             startHourPicker.setDate(endHourPicker.date, animated: true)
         }
+    }
+    
+    private func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "OK", style: .default) {_ in
+            self.dismiss(animated: true)
+        }
+        alert.addAction(okAction)
+        
+        present(alert, animated: true)
     }
 }
