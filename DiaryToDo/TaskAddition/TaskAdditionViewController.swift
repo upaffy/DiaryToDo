@@ -36,8 +36,8 @@ class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputPr
         
         taskNameTF.delegate = self
         
-        endHourPicker.addTarget(self, action: #selector(hourPickerDidChange), for: .valueChanged)
-        startHourPicker.addTarget(self, action: #selector(hourPickerDidChange), for: .valueChanged)
+        endHourPicker.addTarget(self, action: #selector(endHourPickerDidChange), for: .valueChanged)
+        startHourPicker.addTarget(self, action: #selector(startHourPickerDidChange), for: .valueChanged)
         
         presenter.viewDidLoad()
     }
@@ -71,7 +71,13 @@ extension TaskAdditionViewController {
         tableView.endEditing(true)
     }
     
-    @objc private func hourPickerDidChange() {
+    @objc private func startHourPickerDidChange() {
+        if endHourPicker.date < startHourPicker.date {
+            endHourPicker.setDate(startHourPicker.date, animated: true)
+        }
+    }
+    
+    @objc private func endHourPickerDidChange() {
         if startHourPicker.date > endHourPicker.date {
             startHourPicker.setDate(endHourPicker.date, animated: true)
         }
