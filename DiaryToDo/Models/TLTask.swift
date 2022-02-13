@@ -8,7 +8,7 @@
 import Foundation
 
 struct TLTask {
-    var id: Int
+    var id: Int?
     var dateStart: Date
     var dateFinish: Date
     var name: String
