@@ -34,6 +34,10 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
         interactor.fetchTasksForSelectedDay()
     }
     
+    func taskAdditionVCDidDisapear() {
+        interactor.fetchTasksForSelectedDay()
+    }
+    
     func leftButtonPressed() {
         interactor.fetchDays(for: .previousMonth, and: nil)
     }

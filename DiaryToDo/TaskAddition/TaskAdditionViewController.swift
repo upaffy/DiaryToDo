@@ -64,7 +64,7 @@ class TaskAdditionViewController: UITableViewController, TaskAdditionViewInputPr
     
     func handleSaveResult(success: Bool) {
         if success {
-            dismiss(animated: true)
+            performSegue(withIdentifier: "unwindToTaskListVC", sender: nil)
         } else {
             showAlert(title: "Ooops", message: "Something went wrong")
         }

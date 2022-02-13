@@ -15,6 +15,7 @@ protocol CalendarTaskListViewOutputProtocol {
     func rightButtonPressed()
     func collectionViewCellDidSelect(at indexPath: IndexPath)
     func addButtonPressed()
+    func taskAdditionVCDidDisapear()
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
@@ -189,6 +190,11 @@ extension CalendarTaskListViewController {
             
             configurator.configure(with: taskAdditionVC, and: selectedDate)
         }
+    }
+    
+    @IBAction func unwind(for segue: UIStoryboardSegue) {
+        guard segue.source as? TaskAdditionViewController != nil else { return }
+        presenter.taskAdditionVCDidDisapear()
     }
 }
 

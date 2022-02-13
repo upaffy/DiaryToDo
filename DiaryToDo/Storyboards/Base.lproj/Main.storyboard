@@ -203,9 +203,11 @@
                         <outlet property="saveButton" destination="vGo-mO-esA" id="qsm-y9-uWi"/>
                         <outlet property="startHourPicker" destination="GUV-dJ-SbR" id="33r-TY-2S8"/>
                         <outlet property="taskNameTF" destination="utu-fZ-ey5" id="Ivh-Db-FfK"/>
+                        <segue destination="IQy-AK-dlF" kind="unwind" identifier="unwindToTaskListVC" unwindAction="unwindFor:" id="YdA-V3-yOm"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a3P-5E-8Fc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="IQy-AK-dlF" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="2657.971014492754" y="20.758928571428569"/>
         </scene>
