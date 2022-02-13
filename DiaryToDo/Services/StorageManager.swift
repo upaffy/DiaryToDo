@@ -17,8 +17,28 @@ class StorageManager {
     
     private init() {}
     
-    func fetchTasks(completion: @escaping (_ tasks: Results<TaskRealm>) -> Void) {
-        tasks = realm.objects(TaskRealm.self)
-        completion(tasks)
+    func fetchTasks() -> Results<TaskRealm> {
+        realm.objects(TaskRealm.self)
+    }
+    
+    func save(_ task: TaskRealm) -> Bool {
+        let success = write {
+            realm.add(task)
+        }
+        
+        return success
+    }
+    
+    private func write(completion: () -> Void) -> Bool {
+        do {
+            try realm.write {
+                completion()
+            }
+        } catch {
+            print(error)
+            return false
+        }
+        
+        return true
     }
 }

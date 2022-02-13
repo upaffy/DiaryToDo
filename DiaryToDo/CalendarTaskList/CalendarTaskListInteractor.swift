@@ -81,10 +81,8 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     }
     
     func fetchTasksForSelectedDay() {
-        var sections: [TaskListSectionViewModel] = []
-        StorageManager.shared.fetchTasks { [unowned self] tasks in
-            sections = self.prepareSections(from: tasks)
-        }
+        let realmTasks = StorageManager.shared.fetchTasks()
+        let sections = prepareSections(from: realmTasks)
         
         let day = fetchDayString(from: selectedDate)
         let month = fetchMonthString(from: selectedDate)
