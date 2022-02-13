@@ -41,6 +41,7 @@ class TaskAdditionInteractor: TaskAdditionInteractorInputProtocol {
     }
 }
 
+// MARK: - Private methods
 extension TaskAdditionInteractor {
     private func convertToRealmTask(_ task: TLTask) -> TaskRealm {
         let realmTask = TaskRealm()
