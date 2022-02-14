@@ -43,27 +43,7 @@
 		E9DA029E27A9260900E04328 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DA029C27A9260900E04328 /* Main.storyboard */; };
 		E9DA02A027A9260C00E04328 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9DA029F27A9260C00E04328 /* Assets.xcassets */; };
 		E9DA02A327A9260C00E04328 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DA02A127A9260C00E04328 /* LaunchScreen.storyboard */; };
-		E9DA02AE27A9260D00E04328 /* DiaryToDoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA02AD27A9260D00E04328 /* DiaryToDoTests.swift */; };
-		E9DA02B827A9260D00E04328 /* DiaryToDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA02B727A9260D00E04328 /* DiaryToDoUITests.swift */; };
-		E9DA02BA27A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DA02B927A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E9DA02AA27A9260D00E04328 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E9DA028B27A9260900E04328 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E9DA029227A9260900E04328;
-			remoteInfo = DiaryToDo;
-		};
-		E9DA02B427A9260D00E04328 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E9DA028B27A9260900E04328 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E9DA029227A9260900E04328;
-			remoteInfo = DiaryToDo;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		1C95856C17F9EC7A6A66EE29 /* Pods_DiaryToDo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DiaryToDo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,11 +86,6 @@
 		E9DA029F27A9260C00E04328 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E9DA02A227A9260C00E04328 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E9DA02A427A9260C00E04328 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E9DA02A927A9260D00E04328 /* DiaryToDoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryToDoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9DA02AD27A9260D00E04328 /* DiaryToDoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryToDoTests.swift; sourceTree = "<group>"; };
-		E9DA02B327A9260D00E04328 /* DiaryToDoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DiaryToDoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9DA02B727A9260D00E04328 /* DiaryToDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryToDoUITests.swift; sourceTree = "<group>"; };
-		E9DA02B927A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiaryToDoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,20 +94,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E6E89E3AF3B7A570D971BB6 /* Pods_DiaryToDo.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E9DA02A627A9260D00E04328 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E9DA02B027A9260D00E04328 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,8 +219,6 @@
 			isa = PBXGroup;
 			children = (
 				E9DA029527A9260900E04328 /* DiaryToDo */,
-				E9DA02AC27A9260D00E04328 /* DiaryToDoTests */,
-				E9DA02B627A9260D00E04328 /* DiaryToDoUITests */,
 				E9DA029427A9260900E04328 /* Products */,
 				D7C3686C50DABA64FC3CAA7C /* Pods */,
 				9879DC947318F99D0F27B554 /* Frameworks */,
@@ -270,8 +229,6 @@
 			isa = PBXGroup;
 			children = (
 				E9DA029327A9260900E04328 /* DiaryToDo.app */,
-				E9DA02A927A9260D00E04328 /* DiaryToDoTests.xctest */,
-				E9DA02B327A9260D00E04328 /* DiaryToDoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -289,23 +246,6 @@
 				E9FEBB8D27AE7D2500690C29 /* Resources */,
 			);
 			path = DiaryToDo;
-			sourceTree = "<group>";
-		};
-		E9DA02AC27A9260D00E04328 /* DiaryToDoTests */ = {
-			isa = PBXGroup;
-			children = (
-				E9DA02AD27A9260D00E04328 /* DiaryToDoTests.swift */,
-			);
-			path = DiaryToDoTests;
-			sourceTree = "<group>";
-		};
-		E9DA02B627A9260D00E04328 /* DiaryToDoUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E9DA02B727A9260D00E04328 /* DiaryToDoUITests.swift */,
-				E9DA02B927A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift */,
-			);
-			path = DiaryToDoUITests;
 			sourceTree = "<group>";
 		};
 		E9FEBB8D27AE7D2500690C29 /* Resources */ = {
@@ -357,42 +297,6 @@
 			productReference = E9DA029327A9260900E04328 /* DiaryToDo.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E9DA02A827A9260D00E04328 /* DiaryToDoTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E9DA02C027A9260D00E04328 /* Build configuration list for PBXNativeTarget "DiaryToDoTests" */;
-			buildPhases = (
-				E9DA02A527A9260D00E04328 /* Sources */,
-				E9DA02A627A9260D00E04328 /* Frameworks */,
-				E9DA02A727A9260D00E04328 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E9DA02AB27A9260D00E04328 /* PBXTargetDependency */,
-			);
-			name = DiaryToDoTests;
-			productName = DiaryToDoTests;
-			productReference = E9DA02A927A9260D00E04328 /* DiaryToDoTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		E9DA02B227A9260D00E04328 /* DiaryToDoUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E9DA02C327A9260D00E04328 /* Build configuration list for PBXNativeTarget "DiaryToDoUITests" */;
-			buildPhases = (
-				E9DA02AF27A9260D00E04328 /* Sources */,
-				E9DA02B027A9260D00E04328 /* Frameworks */,
-				E9DA02B127A9260D00E04328 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E9DA02B527A9260D00E04328 /* PBXTargetDependency */,
-			);
-			name = DiaryToDoUITests;
-			productName = DiaryToDoUITests;
-			productReference = E9DA02B327A9260D00E04328 /* DiaryToDoUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -405,14 +309,6 @@
 				TargetAttributes = {
 					E9DA029227A9260900E04328 = {
 						CreatedOnToolsVersion = 13.1;
-					};
-					E9DA02A827A9260D00E04328 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = E9DA029227A9260900E04328;
-					};
-					E9DA02B227A9260D00E04328 = {
-						CreatedOnToolsVersion = 13.1;
-						TestTargetID = E9DA029227A9260900E04328;
 					};
 				};
 			};
@@ -430,8 +326,6 @@
 			projectRoot = "";
 			targets = (
 				E9DA029227A9260900E04328 /* DiaryToDo */,
-				E9DA02A827A9260D00E04328 /* DiaryToDoTests */,
-				E9DA02B227A9260D00E04328 /* DiaryToDoUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -444,20 +338,6 @@
 				E9DA02A327A9260C00E04328 /* LaunchScreen.storyboard in Resources */,
 				E9DA02A027A9260C00E04328 /* Assets.xcassets in Resources */,
 				E9DA029E27A9260900E04328 /* Main.storyboard in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E9DA02A727A9260D00E04328 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E9DA02B127A9260D00E04328 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,37 +442,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E9DA02A527A9260D00E04328 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E9DA02AE27A9260D00E04328 /* DiaryToDoTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E9DA02AF27A9260D00E04328 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E9DA02BA27A9260D00E04328 /* DiaryToDoUITestsLaunchTests.swift in Sources */,
-				E9DA02B827A9260D00E04328 /* DiaryToDoUITests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E9DA02AB27A9260D00E04328 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E9DA029227A9260900E04328 /* DiaryToDo */;
-			targetProxy = E9DA02AA27A9260D00E04328 /* PBXContainerItemProxy */;
-		};
-		E9DA02B527A9260D00E04328 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E9DA029227A9260900E04328 /* DiaryToDo */;
-			targetProxy = E9DA02B427A9260D00E04328 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		E9DA029C27A9260900E04328 /* Main.storyboard */ = {
@@ -790,98 +640,6 @@
 			};
 			name = Release;
 		};
-		E9DA02C127A9260D00E04328 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = upaffy.DiaryToDoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiaryToDo.app/DiaryToDo";
-			};
-			name = Debug;
-		};
-		E9DA02C227A9260D00E04328 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = upaffy.DiaryToDoTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DiaryToDo.app/DiaryToDo";
-			};
-			name = Release;
-		};
-		E9DA02C427A9260D00E04328 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = upaffy.DiaryToDoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DiaryToDo;
-			};
-			name = Debug;
-		};
-		E9DA02C527A9260D00E04328 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				GENERATE_INFOPLIST_FILE = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = upaffy.DiaryToDoUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DiaryToDo;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -899,24 +657,6 @@
 			buildConfigurations = (
 				E9DA02BE27A9260D00E04328 /* Debug */,
 				E9DA02BF27A9260D00E04328 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E9DA02C027A9260D00E04328 /* Build configuration list for PBXNativeTarget "DiaryToDoTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E9DA02C127A9260D00E04328 /* Debug */,
-				E9DA02C227A9260D00E04328 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E9DA02C327A9260D00E04328 /* Build configuration list for PBXNativeTarget "DiaryToDoUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E9DA02C427A9260D00E04328 /* Debug */,
-				E9DA02C527A9260D00E04328 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
