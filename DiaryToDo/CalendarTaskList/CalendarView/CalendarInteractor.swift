@@ -68,13 +68,9 @@ class CalendarInteractor: CalendarInteractorInputProtocol {
         
         let days = fetchDays()
         
-        let month = fetchMonthString(from: baseDate)
-        let year = fetchYearString(from: baseDate)
-        
         let dataStore = CalendarViewDataStore(
             days: days,
-            displayedMonth: month,
-            displayedYear: year,
+            baseDate: baseDate,
             selectedDate: selectedDate
         )
         
@@ -174,17 +170,5 @@ extension CalendarInteractor {
     
     private func addMonth(to date: Date) -> Date {
         return calendar.date(byAdding: .month, value: 1, to: date) ?? Date()
-    }
-    
-    private func fetchMonthString(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "LLLL"
-        return dateFormatter.string(from: date)
-    }
-    
-    private func fetchYearString(from date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy"
-        return dateFormatter.string(from: date)
     }
 }

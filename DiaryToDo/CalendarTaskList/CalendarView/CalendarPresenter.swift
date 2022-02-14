@@ -9,8 +9,7 @@ import Foundation
 
 struct CalendarViewDataStore {
     let days: [CalendarDay]
-    let displayedMonth: String
-    let displayedYear: String
+    let baseDate: Date
     let selectedDate: Date
 }
 
@@ -42,11 +41,34 @@ class CalendarPresenter: CalendarViewOutputProtocol {
 // MARK: - CalendarInteractorOutputProtocol
 extension CalendarPresenter: CalendarInteractorOutputProtocol {
     func daysDidReceive(with dataStore: CalendarViewDataStore) {
-        let navItemTitle = dataStore.displayedMonth + " " + dataStore.displayedYear
         let calendarSectionVM = CalendarSectionViewModel()
-        
         dataStore.days.forEach { calendarSectionVM.cells.append(CalendarCellViewModel(calendarDay: $0))}
+        
+        let currentDateString = convertToShortString(date: dataStore.baseDate)
+        let selectedDateString = convertToLongString(date: dataStore.selectedDate)
+        
+        view.reloadCalendar(
+            for: calendarSectionVM,
+            selectedDate: dataStore.selectedDate,
+            currentDateTitle: currentDateString,
+            selectedDateTitle: selectedDateString
+        )
+    }
+}
 
-        view.reloadCalendar(for: calendarSectionVM, with: navItemTitle, and: dataStore.selectedDate)
+// MARK: - Private Methods
+extension CalendarPresenter {
+    private func convertToLongString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd MMMM y"
+        
+        return dateFormatter.string(from: date)
+    }
+    
+    private func convertToShortString(date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMMM y"
+        
+        return dateFormatter.string(from: date)
     }
 }

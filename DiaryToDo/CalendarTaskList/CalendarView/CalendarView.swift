@@ -8,7 +8,7 @@
 import UIKit
 
 protocol CalendarViewDelegate: AnyObject {
-    func calendarDidChange(dateTitle: String, selectedDate: Date)
+    func calendarDidChange(selectedDate: Date, currentDateTitle: String, selectedDateTitle: String)
 }
 
 protocol CalendarViewOutputProtocol {
@@ -23,8 +23,9 @@ protocol CalendarViewOutputProtocol {
 protocol CalendarViewInputProtocol: AnyObject {
     func reloadCalendar(
         for calendarSection: CalendarSectionViewModel,
-        with title: String,
-        and selectedDate: Date
+        selectedDate: Date,
+        currentDateTitle: String,
+        selectedDateTitle: String
     )
 }
 
@@ -66,9 +67,16 @@ extension CalendarView {
 
 // MARK: - CalendarViewInputProtocol
 extension CalendarView: CalendarViewInputProtocol {
-    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with title: String, and selectedDate: Date) {
+    // swiftlint:disable:next line_length
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, selectedDate: Date, currentDateTitle: String, selectedDateTitle: String) {
+        
         calendarSectionViewModel = calendarSection
-        calendarDelegate.calendarDidChange(dateTitle: title, selectedDate: selectedDate)
+        
+        calendarDelegate.calendarDidChange(
+            selectedDate: selectedDate,
+            currentDateTitle: currentDateTitle,
+            selectedDateTitle: selectedDateTitle
+        )
         
         reloadData()
     }
