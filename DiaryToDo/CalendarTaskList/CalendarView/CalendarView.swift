@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol CalendarViewDelegate {
+protocol CalendarViewDelegate: AnyObject {
     func calendarDidChange(dateTitle: String, selectedDate: Date)
 }
 
@@ -101,6 +101,7 @@ extension CalendarView: UICollectionViewDelegate {
 
 // MARK: - UICollectionViewDelegateFlowLayout
 extension CalendarView: UICollectionViewDelegateFlowLayout {
+    // swiftlint:disable:next line_length
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 
         let width = Int(frame.width) / 7

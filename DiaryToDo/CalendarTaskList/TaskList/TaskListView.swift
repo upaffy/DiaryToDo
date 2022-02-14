@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol TaskListDelegate {
+protocol TaskListDelegate: AnyObject {
     func didTapCell(with task: TLTask)
 }
 

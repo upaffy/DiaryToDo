@@ -18,4 +18,3 @@ class CalendarConfigurator: CalendarConfiguratorInputProtocol {
         presenter.interactor = interactor
     }
 }
-
