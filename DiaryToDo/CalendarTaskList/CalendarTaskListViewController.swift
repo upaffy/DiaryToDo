@@ -167,7 +167,7 @@ extension CalendarTaskListViewController {
             selectedDayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             selectedDayLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
             
-            taskList.topAnchor.constraint(equalTo: selectedDayLabel.bottomAnchor),
+            taskList.topAnchor.constraint(equalTo: selectedDayLabel.bottomAnchor, constant: 5),
             taskList.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             taskList.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             taskList.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
