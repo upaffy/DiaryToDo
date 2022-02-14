@@ -14,28 +14,49 @@ protocol CalendarTaskListViewOutputProtocol {
     func leftButtonPressed()
     func rightButtonPressed()
     func collectionViewCellDidSelect(at indexPath: IndexPath)
+    func addButtonPressed()
+    func didTapCell(at indexPath: IndexPath)
+    func taskAdditionVCDidDisapear()
 }
 
 protocol CalendarTaskListViewInputProtocol: AnyObject {
-    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String)
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String)
+    func reloadTaskList(for taskListSections: [TaskListSectionViewModel], with dayTitle: String)
 }
 
 class CalendarTaskListViewController: UIViewController {
     var presenter: CalendarTaskListViewOutputProtocol!
     private let configurator: CalendarTaskListConfiguratorInputProtocol = CalendarTaskListConfigurator()
     
-    private var sectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
+    private var calendarSectionViewModel: CalendarSectionViewModelProtocol = CalendarSectionViewModel()
+    private var taskListSectionViewModels: [TaskListSectionViewModelProtocol] = []
     
     private lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
+        return setupCollectionView()
+    }()
+    
+    private lazy var divider: UIView = {
+        let divider = UIView()
+        divider.translatesAutoresizingMaskIntoConstraints = false
         
-        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.isScrollEnabled = false
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        divider.backgroundColor = .lightGray
         
-        return collectionView
+        return divider
+    }()
+    
+    private lazy var tableView: UITableView = {
+        return setupTableView()
+    }()
+    
+    private lazy var selectedDayLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+
+        label.textAlignment = .center
+        label.text = "12 February"
+        label.font = UIFont.preferredFont(forTextStyle: .body)
+        
+        return label
     }()
     
     private lazy var leftButton: UIButton = {
@@ -61,10 +82,20 @@ class CalendarTaskListViewController: UIViewController {
         configurator.configure(with: self)
         presenter.viewDidLoad()
         
-        addSubviews(collectionView, leftButton, rightButton)
-        setupConstraints()
+        addSubviews(
+            collectionView,
+            leftButton,
+            rightButton,
+            divider,
+            selectedDayLabel,
+            tableView
+        )
         
-        setupCollectionView()
+        setupConstraints()
+    }
+    
+    @IBAction func addButtonPressed(_ sender: Any) {
+        presenter.addButtonPressed()
     }
     
     @objc private func showPreviousMonth(_ sender: Any) {
@@ -88,7 +119,20 @@ class CalendarTaskListViewController: UIViewController {
             collectionView.leadingAnchor.constraint(equalTo: leftButton.trailingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: rightButton.leadingAnchor),
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
-            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3)
+            collectionView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
+            
+            divider.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 10),
+            divider.heightAnchor.constraint(equalToConstant: 1),
+            divider.widthAnchor.constraint(equalTo: view.widthAnchor),
+            divider.bottomAnchor.constraint(equalTo: selectedDayLabel.topAnchor, constant: -10),
+            
+            selectedDayLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
+            selectedDayLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
+            
+            tableView.topAnchor.constraint(equalTo: selectedDayLabel.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
         ]
         
         NSLayoutConstraint.activate(constraints)
@@ -100,7 +144,15 @@ class CalendarTaskListViewController: UIViewController {
         }
     }
     
-    private func setupCollectionView() {
+    private func setupCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.isScrollEnabled = false
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        
         collectionView.register(
             CalendarCell.self,
             forCellWithReuseIdentifier: CalendarCellViewModel.reuseIdentifier
@@ -108,17 +160,82 @@ class CalendarTaskListViewController: UIViewController {
         
         collectionView.dataSource = self
         collectionView.delegate = self
+        
+        return collectionView
+    }
+    
+    private func setupTableView() -> UITableView {
+        let tableView = UITableView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.register(
+            TaskListCell.self,
+            forCellReuseIdentifier: TaskListCellViewModel.reuseIdentifier
+        )
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        return tableView
+    }
+}
+
+// MARK: - Navigation
+extension CalendarTaskListViewController {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if let taskDetailsVC = segue.destination as? TaskDetailsViewController {
+            let configurator: TaskDetailsConfiguratorInputProtocol = TaskDetailsConfigurator()
+            guard let task = sender as? TLTask else { return }
+            
+            configurator.configure(with: taskDetailsVC, and: task)
+        } else {
+            
+            guard
+                let navigationController = segue.destination as? UINavigationController,
+                let taskAdditionVC = navigationController.children.first as? TaskAdditionViewController
+            else {
+                return
+            }
+            
+            let configurator: TaskAdditionConfiguratorInputProtocol = TaskAdditionConfigurator()
+            guard let selectedDate = sender as? Date else { return }
+            
+            configurator.configure(with: taskAdditionVC, and: selectedDate)
+        }
+    }
+    
+    @IBAction func unwind(for segue: UIStoryboardSegue) {
+        guard segue.source as? TaskAdditionViewController != nil else { return }
+        presenter.taskAdditionVCDidDisapear()
+    }
+}
+
+// MARK: - CalendarTaskListViewInputProtocol
+extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
+    func reloadCalendar(for calendarSection: CalendarSectionViewModel, with navItemTitle: String) {
+        navigationItem.title = navItemTitle
+        calendarSectionViewModel = calendarSection
+        
+        collectionView.reloadData()
+    }
+    
+    func reloadTaskList(for taskListSections: [TaskListSectionViewModel], with dayTitle: String) {
+        selectedDayLabel.text = dayTitle
+        taskListSectionViewModels = taskListSections
+        
+        tableView.reloadData()
     }
 }
 
 // MARK: - UICollectionViewDataSource
 extension CalendarTaskListViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        sectionViewModel.cells.count
+        calendarSectionViewModel.cells.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cellViewModel = sectionViewModel.cells[indexPath.item]
+        let cellViewModel = calendarSectionViewModel.cells[indexPath.item]
         // swiftlint:disable force_cast
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CalendarCellViewModel.reuseIdentifier,
                                                       for: indexPath) as! CalendarCell
@@ -147,12 +264,40 @@ extension CalendarTaskListViewController: UICollectionViewDelegateFlowLayout {
     }
 }
 
-// MARK: - CalendarTaskListViewInputProtocol
-extension CalendarTaskListViewController: CalendarTaskListViewInputProtocol {
-    func reloadCalendar(for section: CalendarSectionViewModel, with navItemTitle: String) {
-        navigationItem.title = navItemTitle
-        sectionViewModel = section
+// MARK: - UITableViewDataSource
+extension CalendarTaskListViewController: UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        taskListSectionViewModels[section].tasks.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let taskListCellViewModel = taskListSectionViewModels[indexPath.section].tasks[indexPath.row]
+        // swiftlint:disable force_cast
+        let cell = tableView.dequeueReusableCell(withIdentifier: TaskListCellViewModel.reuseIdentifier,
+                                                 for: indexPath) as! TaskListCell
+        // swiftlint:enable force_cast
         
-        collectionView.reloadData()
+        cell.viewModel = taskListCellViewModel
+        
+        return cell
+    }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        taskListSectionViewModels.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        taskListSectionViewModels[section].sectionName
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        50
+    }
+}
+
+extension CalendarTaskListViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        presenter.didTapCell(at: indexPath)
     }
 }

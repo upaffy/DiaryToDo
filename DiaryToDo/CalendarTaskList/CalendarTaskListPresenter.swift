@@ -7,8 +7,15 @@
 
 import Foundation
 
-struct CalendarTaskListDataStore {
+struct CalendarDataStore {
     let days: [CalendarDay]
+    let displayedMonth: String
+    let displayedYear: String
+}
+
+struct TaskListDataStore {
+    let sections: [TaskListSectionViewModel]
+    let displayedDay: String
     let displayedMonth: String
     let displayedYear: String
 }
@@ -16,8 +23,9 @@ struct CalendarTaskListDataStore {
 class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     unowned let view: CalendarTaskListViewInputProtocol
     var interactor: CalendarTaskListInteractorInputProtocol!
+    var router: CalendarTaskListRouterInputProtocol!
     
-    private var dataStore: CalendarTaskListDataStore?
+    private var taskListDataStore: TaskListDataStore?
     
     required init(view: CalendarTaskListViewInputProtocol) {
         self.view = view
@@ -25,6 +33,11 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     
     func viewDidLoad() {
         interactor.fetchDays(for: .currentMonth, and: nil)
+        interactor.fetchTasksForSelectedDay()
+    }
+    
+    func taskAdditionVCDidDisapear() {
+        interactor.fetchTasksForSelectedDay()
     }
     
     func leftButtonPressed() {
@@ -37,19 +50,45 @@ class CalendarTaskListPresenter: CalendarTaskListViewOutputProtocol {
     
     func collectionViewCellDidSelect(at indexPath: IndexPath) {
         interactor.fetchDays(for: .currentMonth, and: indexPath.item)
+        interactor.fetchTasksForSelectedDay()
+    }
+    
+    func addButtonPressed() {
+        let selectedDate = interactor.getSelectedDate()
+        router.openTaskAdditionViewController(with: selectedDate)
+    }
+    
+    func didTapCell(at indexPath: IndexPath) {
+        guard let task = taskListDataStore?.sections[indexPath.section].tasks[indexPath.row] else {
+            return
+        }
+        
+        let tlTask = TLTask(
+            dateStart: task.dateStart,
+            dateFinish: task.dateFinish,
+            name: task.name,
+            description: task.description
+        )
+        
+        router.openTaskDetailsViewController(with: tlTask)
     }
 }
 
 // MARK: - CalendarTaskListInteractorOutputProtocol
 extension CalendarTaskListPresenter: CalendarTaskListInteractorOutputProtocol {
-    func daysDidReceive(with dataStore: CalendarTaskListDataStore) {
-        self.dataStore = dataStore
-        
+    func daysDidReceive(with dataStore: CalendarDataStore) {
         let navItemTitle = dataStore.displayedMonth + " " + dataStore.displayedYear
-        let section = CalendarSectionViewModel()
+        let calendarSectionVM = CalendarSectionViewModel()
         
-        dataStore.days.forEach { section.cells.append(CalendarCellViewModel(calendarDay: $0))}
+        dataStore.days.forEach { calendarSectionVM.cells.append(CalendarCellViewModel(calendarDay: $0))}
 
-        view.reloadCalendar(for: section, with: navItemTitle)
+        view.reloadCalendar(for: calendarSectionVM, with: navItemTitle)
+    }
+    
+    func tasksDidReceive(with dataStore: TaskListDataStore) {
+        taskListDataStore = dataStore
+        
+        let dayTitle = dataStore.displayedMonth + " " + dataStore.displayedDay + ", " + dataStore.displayedYear
+        view.reloadTaskList(for: dataStore.sections, with: dayTitle)
     }
 }

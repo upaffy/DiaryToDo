@@ -5,21 +5,27 @@
 //  Created by Pavlentiy on 07.02.2022.
 //
 
+import RealmSwift
 import Foundation
 
 protocol CalendarTaskListInteractorOutputProtocol: AnyObject {
-    func daysDidReceive(with dataStore: CalendarTaskListDataStore)
+    func daysDidReceive(with dataStore: CalendarDataStore)
+    func tasksDidReceive(with dataStore: TaskListDataStore)
 }
 
 protocol CalendarTaskListInteractorInputProtocol {
     init(presenter: CalendarTaskListInteractorOutputProtocol)
     func fetchDays(for monthType: MonthType?, and dayIndex: Int?)
+    func fetchTasksForSelectedDay()
+    func getSelectedDate() -> Date
 }
 
 class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
     unowned let presenter: CalendarTaskListInteractorOutputProtocol
     
     let calendar = Calendar.current
+    let secondsInHour = TimeInterval(3600)
+    
     private var baseDate = Date()
     private var selectedDate = Date()
     private var days = [CalendarDay]()
@@ -64,13 +70,42 @@ class CalendarTaskListInteractor: CalendarTaskListInteractorInputProtocol {
             defineBaseDate(by: monthType ?? .currentMonth)
         }
         
-        fetchDays()
+        let days = fetchDays()
+        
+        let month = fetchMonthString(from: baseDate)
+        let year = fetchYearString(from: baseDate)
+        
+        let dataStore = CalendarDataStore(days: days, displayedMonth: month, displayedYear: year)
+        
+        presenter.daysDidReceive(with: dataStore)
+    }
+    
+    func fetchTasksForSelectedDay() {
+        let realmTasks = StorageManager.shared.fetchTasks()
+        let sections = prepareSections(from: realmTasks)
+        
+        let day = fetchDayString(from: selectedDate)
+        let month = fetchMonthString(from: selectedDate)
+        let year = fetchYearString(from: selectedDate)
+        
+        let dataStore = TaskListDataStore(
+            sections: sections,
+            displayedDay: day,
+            displayedMonth: month,
+            displayedYear: year
+        )
+        
+        presenter.tasksDidReceive(with: dataStore)
+    }
+    
+    func getSelectedDate() -> Date {
+        selectedDate
     }
 }
 
 // MARK: - Private methods
 extension CalendarTaskListInteractor {
-    private func fetchDays() {
+    private func fetchDays() -> [CalendarDay] {
         days = weekdays
         
         var day = firstDayOfMonth
@@ -98,12 +133,7 @@ extension CalendarTaskListInteractor {
             days.append(calendarDay)
         }
         
-        let month = fetchMonthString(from: baseDate)
-        let year = fetchYearString(from: baseDate)
-        
-        let dataStore = CalendarTaskListDataStore(days: days, displayedMonth: month, displayedYear: year)
-        
-        presenter.daysDidReceive(with: dataStore)
+        return days
     }
     
     private func defineBaseDate(by index: Int) {
@@ -167,6 +197,12 @@ extension CalendarTaskListInteractor {
         return calendar.date(byAdding: .month, value: 1, to: date) ?? Date()
     }
     
+    private func fetchDayString(from date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "d"
+        return dateFormatter.string(from: date)
+    }
+    
     private func fetchMonthString(from date: Date) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "LLLL"
@@ -177,5 +213,75 @@ extension CalendarTaskListInteractor {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy"
         return dateFormatter.string(from: date)
+    }
+    
+    // swiftlint:disable:next line_length
+    private func defineTasks(between lhs: TimeInterval, and rhs: TimeInterval, from tasks: Results<TaskRealm>) -> Results<TaskRealm> {
+        let predicate = NSPredicate(
+            format: "dateFinish > %@ AND dateStart <= %@",
+            NSNumber(value: lhs),
+            NSNumber(value: rhs)
+        )
+        
+        return tasks.filter(predicate)
+    }
+    
+    private func prepareSections(from realmTasks: Results<TaskRealm>) -> [TaskListSectionViewModel] {
+        var sections: [TaskListSectionViewModel] = []
+        
+        let dayStart = calendar.dateInterval(of: .day, for: selectedDate)?.start ?? Date()
+        let dayEnd = calendar.dateInterval(of: .day, for: selectedDate)?.end ?? Date()
+        
+        let startDayTimestamp = dayStart.timeIntervalSince1970
+        let endDayTimestamp = dayEnd.timeIntervalSince1970
+        
+        let tasksInSelectedDay = defineTasks(between: startDayTimestamp, and: endDayTimestamp, from: realmTasks)
+        
+        var timeCounter = startDayTimestamp
+        while timeCounter < endDayTimestamp {
+            // moves through the day in 1-hour increments
+            sections.append(prepareHourSection(startHour: timeCounter, with: tasksInSelectedDay))
+            
+            timeCounter += secondsInHour
+        }
+        
+        return sections
+    }
+    
+    private func prepareHourSection(startHour: TimeInterval, with tasks: Results<TaskRealm>) -> TaskListSectionViewModel {
+        let taskListSectionViewModel = TaskListSectionViewModel()
+        
+        let endHour = startHour + secondsInHour
+        
+        let currentHourTasks = defineTasks(between: startHour, and: endHour, from: tasks)
+        currentHourTasks.forEach { realmTask in
+            let tlTask = convertDataToTLTask(from: realmTask)
+            taskListSectionViewModel.tasks.append(TaskListCellViewModel(task: tlTask))
+        }
+        
+        let sectionName = fetchHourStringFromTimestamp(startHour) + " - " + fetchHourStringFromTimestamp(endHour)
+        
+        taskListSectionViewModel.sectionName = sectionName
+        
+        return taskListSectionViewModel
+    }
+    
+    private func convertDataToTLTask(from task: TaskRealm) -> TLTask {
+        TLTask(
+            id: task.id,
+            dateStart: Date(timeIntervalSince1970: task.dateStart),
+            dateFinish: Date(timeIntervalSince1970: task.dateFinish),
+            name: task.name,
+            description: task.taskDescription
+        )
+    }
+    
+    private func fetchHourStringFromTimestamp(_ timestamp: TimeInterval) -> String {
+        let date = Date(timeIntervalSince1970: timestamp)
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "HH"
+        
+        return "\(dateFormatter.string(from: date)):00"
     }
 }
