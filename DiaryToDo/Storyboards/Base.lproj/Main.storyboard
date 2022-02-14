@@ -23,7 +23,7 @@
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3mK-rc-1YZ">
                             <color key="tintColor" systemColor="systemRedColor"/>
                             <connections>
-                                <action selector="addButtonPressed:" destination="3QG-Lp-9LV" id="icB-wq-01M"/>
+                                <action selector="addButtonPressed:" destination="3QG-Lp-9LV" id="w0L-hV-f4X"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
