@@ -128,6 +128,8 @@ extension CalendarInteractor {
     }
     
     private func defineSelectedDate(by index: Int) {
+        guard index >= weekdays.count else { return }
+        
         let selectedDay = Int(days[index].day) ?? 1
         
         if index < startingSpaces + weekdays.count {
