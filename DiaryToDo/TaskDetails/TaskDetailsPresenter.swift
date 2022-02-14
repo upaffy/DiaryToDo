@@ -33,10 +33,10 @@ extension TaskDetailsPresenter: TaskDetailsInteractorOutputProtocol {
         view.displayDescription(with: dataStore.description)
         
         let dateStartString = convertToString(date: dataStore.dateStart)
-        view.displayDateStart(with: "Date Start: \(dateStartString)")
+        view.displayDateStart(with: dateStartString)
         
         let dateFinishString = convertToString(date: dataStore.dateFinish)
-        view.displayDateFinish(with: "Date Finish: \(dateFinishString)")
+        view.displayDateFinish(with: dateFinishString)
     }
     
     private func convertToString(date: Date) -> String {
